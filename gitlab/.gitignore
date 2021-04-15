@@ -1,0 +1,5 @@
+gitlab-server
+gitlab-runner
+server
+runner
+backup/*.tar

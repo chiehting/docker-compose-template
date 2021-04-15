@@ -1,0 +1,19 @@
+{% assign social_links = site.social %}
+
+<ul class="social-media-list">
+  {% if social_links.dribbble %}<li><a href="{{ social_links.dribbble }}" title="{{ social_links.dribbble | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#dribbble' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.facebook %}<li><a href="{{ social_links.facebook }}" title="{{ social_links.facebook | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#facebook' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.flickr %}<li><a href="{{ social_links.flickr }}" title="{{ social_links.flickr | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#flickr' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.github %}<li><a href="{{ social_links.github }}" title="{{ social_links.github | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#github' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.instagram %}<li><a href="{{ social_links.instagram }}" title="{{ social_links.instagram | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#instagram' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.linkedin %}<li><a href="{{ social_links.linkedin }}" title="{{ social_links.linkedin | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#linkedin' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.stackoverflow %}<li><a href="{{ social_links.stackoverflow }}" title="{{ social_links.stackoverflow.username | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#stackoverflow' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.pinterest %}<li><a href="{{ social_links.pinterest }}" title="{{ social_links.pinterest | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#pinterest' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.twitter %}<li><a href="{{ social_links.twitter }}" title="{{ social_links.twitter | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#twitter' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.youtube %}<li><a href="{{ social_links.youtube }}" title="{{ social_links.youtube | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#youtube' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.youtube_channel %}<li><a href="{{ social_links.youtube_channel }}" title="{{ social_links.youtube_channel_name | escape | default: 'YouTube' }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#youtube' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.telegram %}<li><a href="{{ social_links.telegram }}" title="{{ social_links.telegram | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#telegram' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.microdotblog %}<li><a rel="me" href="{{ social_links.microdotblog }}" title="{{ social_links.microdotblog | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#microdotblog' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.googleplus %}<li><a href="{{ social_links.googleplus }}" title="{{ social_links.googleplus | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#googleplus' | relative_url }}"></use></svg></a></li>{% endif %}
+  {% if social_links.rss %}<li><a href="{{ 'feed.xml' | relative_url }}" title="{{ social_links.rss | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/svg/icons.svg#rss' | relative_url }}"></use></svg></a></li>{% endif %}
+</ul>

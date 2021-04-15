@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  redmine:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./docker
+    image: redmine:4.0.5
+    restart: always
+    ports:
+      - "80:3000"
+    volumes:
+      - './redmine/files:/usr/src/redmine/files'
+      - './redmine/plugins:/usr/src/redmine/plugins'
+      - './redmine/repo:/usr/src/redmine/repo'
+      - './redmine/config/settings.yml:/usr/src/redmine/config/settings.yml'
+    environment:
+      REDMINE_PLUGINS_MIGRATE: 'true'
+#      REDMINE_DB_MYSQL: 'db'
+      REDMINE_DB_POSTGRES: 'db'
+      REDMINE_DB_USERNAME: 'redmine'
+      REDMINE_DB_PASSWORD: 'password'
+
+  db:
+    image: postgres:11.5
+    restart: always
+    volumes:
+      - './postgresql:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_USER: 'redmine'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'redmine'
+
+#  db:
+#    image: mysql:5.7
+#    restart: always
+#    ports:
+#      - '3306:3306'
+#    volumes:
+#      - './mysql:/var/lib/mysql'
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 'rootpassword'
+#      MYSQL_USER: 'redmine'
+#      MYSQL_PASSWORD: 'password'
+#      MYSQL_DATABASE: 'redmine'
+

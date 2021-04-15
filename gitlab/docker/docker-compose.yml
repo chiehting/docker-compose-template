@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+
+  server:
+    image: 'gitlab/gitlab-ce:13.4.1-ce.0'
+    container_name: gitlab
+    hostname: 'gitlab.chiehting.tw'
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.chiehting.tw'
+        registry_external_url 'http://gitlab.chiehting.tw:5050'
+        letsencrypt['enable'] = false
+        nginx['redirect_http_to_https'] = false
+        registry_nginx['redirect_http_to_https'] = false
+        mattermost_nginx['redirect_http_to_https'] = false
+        #pages_external_url 'http://pages.chiehting.tw'
+        #gitlab_pages['external_http'] = 'http://pages.chiehting.tw'
+        #gitlab_pages['inplace_chroot'] = true
+        #gitlab_pages['enable'] = false
+    ports:
+      - '80:80'
+      - '443:443'
+      - '5050:5050'
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    volumes:
+      - '../server/config:/etc/gitlab'
+      - '../server/logs:/var/log/gitlab'
+      - '../server/data:/var/opt/gitlab'
+
+  runner:
+    image: 'gitlab/gitlab-runner:alpine-v12.4.0'
+    container_name: gitlab-runner
+    restart: always
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    volumes:
+      - '../runner/config:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+networks:
+  default:
+    name: gitlab-ce
+

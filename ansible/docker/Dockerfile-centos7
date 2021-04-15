@@ -1,0 +1,7 @@
+FROM centos:centos7.6.1810
+MAINTAINER Justin <ting911111@gmail.com>
+RUN yum install openssh-server sudo -y \
+    && yum clean all
+
+RUN /usr/sbin/sshd-keygen -A \
+    && sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config

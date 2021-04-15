@@ -1,0 +1,24 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so

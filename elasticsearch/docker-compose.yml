@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    container_name: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=true
+      - node.name=node1
+      - cluster.name=elasticsearch
+      - cluster.initial_master_nodes=node1
+      - network.host=0.0.0.0
+      - processors=2
+      - action.auto_create_index=true
+      - xpack.security.enabled=true
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.keystore.path=certs/elastic-stack-ca.p12
+      - xpack.security.transport.ssl.truststore.path=certs/elastic-stack-ca.p12
+      - xpack.security.transport.ssl.keystore.password=password
+      - xpack.security.transport.ssl.truststore.password=password
+      - ELASTIC_PASSWORD=password
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+      - ./certs:/usr/share/elasticsearch/config/certs
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.1
+    container_name: kibana
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200/"
+      ELASTICSEARCH_REQUESTTIMEOUT: "300000"
+      XPACK_SECURITY_ENABLED: "true"
+      ELASTICSEARCH_USERNAME: "elastic"
+      ELASTICSEARCH_PASSWORD: "password"
+    depends_on:
+      - elasticsearch
+    ports:
+      - '80:5601'

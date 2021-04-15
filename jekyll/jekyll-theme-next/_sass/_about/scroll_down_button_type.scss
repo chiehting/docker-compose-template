@@ -1,0 +1,87 @@
+.scroll_down_button {
+  @-webkit-keyframes ani-mouse {
+    0% {
+      opacity: 1;
+      top: 29%;
+    }
+    15% {
+      opacity: 1;
+      top: 60%;
+    }
+    50% {
+      opacity: 0;
+      top: 60%;
+    }
+    100% {
+      opacity: 0;
+      top: 29%;
+    }
+  }
+  @-moz-keyframes ani-mouse {
+    0% {
+      opacity: 1;
+      top: 29%;
+    }
+    15% {
+      opacity: 1;
+      top: 60%;
+    }
+    50% {
+      opacity: 0;
+      top: 60%;
+    }
+    100% {
+      opacity: 0;
+      top: 29%;
+    }
+  }
+  @keyframes ani-mouse {
+    0% {
+      opacity: 1;
+      top: 29%;
+    }
+    15% {
+      opacity: 1;
+      top: 60%;
+    }
+    50% {
+      opacity: 0;
+      top: 60%;
+    }
+    100% {
+      opacity: 0;
+      top: 29%;
+    }
+  }
+  .scroll-btn {
+    p {
+      color: #ffffff;
+    }
+    .mouse {
+      position: relative;
+      display: block;
+      width: 35px;
+      height: 55px;
+      margin: 50px auto 0;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      border: 2px solid white;
+      border-radius: 23px;
+    & > * {
+        position: absolute;
+        display: block;
+        top: 29%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        margin: -4px 0 0 -4px;
+        background: white;
+        border-radius: 50%;
+        -webkit-animation: ani-mouse 3s linear infinite;
+        -moz-animation: ani-mouse 3s linear infinite;
+        animation: ani-mouse 3s linear infinite;
+      }
+    }
+  }
+}

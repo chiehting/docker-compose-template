@@ -1,0 +1,16 @@
+_site/*
+_theme_packages/*
+
+Thumbs.db
+.DS_Store
+
+!.gitkeep
+
+.rbenv-version
+.rvmrc
+/vendor
+.sass-cache
+.obsidian
+_site
+_posts/0-work
+#_posts/0-draft
