@@ -5,18 +5,18 @@ services:
   server:
     image: 'gitlab/gitlab-ce:13.4.1-ce.0'
     container_name: gitlab
-    hostname: 'gitlab.chiehting.tw'
+    hostname: 'gitlab.chiehting.com'
     restart: always
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.chiehting.tw'
-        registry_external_url 'http://gitlab.chiehting.tw:5050'
+        external_url 'http://gitlab.chiehting.com'
+        registry_external_url 'http://gitlab.chiehting.com:5050'
         letsencrypt['enable'] = false
         nginx['redirect_http_to_https'] = false
         registry_nginx['redirect_http_to_https'] = false
         mattermost_nginx['redirect_http_to_https'] = false
-        #pages_external_url 'http://pages.chiehting.tw'
-        #gitlab_pages['external_http'] = 'http://pages.chiehting.tw'
+        #pages_external_url 'http://pages.chiehting.com'
+        #gitlab_pages['external_http'] = 'http://pages.chiehting.com'
         #gitlab_pages['inplace_chroot'] = true
         #gitlab_pages['enable'] = false
     ports:

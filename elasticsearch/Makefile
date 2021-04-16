@@ -1,34 +1,48 @@
 .PHONY: help
-help:
+help: ## Format and display the manual pages
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-init: ## initialization
+.PHONY: init
+init: ## Initialization Services
 	mkdir -p data certs && chmod 777 data certs
-	docker-compose -f elasticsearch-certutil.yml up
-	docker-compose -f elasticsearch-certutil.yml down
+	$(call elasticsearch-certutil, up)
+	$(call elasticsearch-certutil, down)
 
-up: ## docker-compose up
+.PHONY: up
+up: ## Create and start containers
 	$(call docker-compose,up -d)
 
-down: ## docker-compose down
+.PHONY: down
+down: ## Stop and remove resources
 	$(call docker-compose,down)
 
-ps: ## docker-compose ps
+.PHONY: ps
+ps: ## List containers
 	$(call docker-compose,ps)
 
-logs: ## docker-compose logs
+.PHONY: logs
+logs: ## View output from containers
 	$(call docker-compose,logs -f --tail 100)
 
+.PHONY: clean
+clean: ## Clean Elasticsearch data
+	rm -rf data
+	rm -rf certs/elastic-stack-ca.p12
+
 .PHONY: du
-du:
+du: ## Containers down and up
 	@make down
 	@make up
 
 .PHONY: dul
-dul:
+dul: ## Containers down and up and logs
 	@make du
 	@make logs
 
 define docker-compose
-    @docker-compose -f docker-compose.yml -p elasticsearch $1;
+    @docker-compose -f build/docker-compose.yml -p elasticsearch $1;
+endef
+
+define elasticsearch-certutil
+    @docker-compose -f build/elasticsearch-certutil.yml -p elasticsearch $1;
 endef

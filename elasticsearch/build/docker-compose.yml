@@ -17,16 +17,16 @@ services:
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.security.transport.ssl.keystore.path=certs/elastic-stack-ca.p12
       - xpack.security.transport.ssl.truststore.path=certs/elastic-stack-ca.p12
-      - xpack.security.transport.ssl.keystore.password=password
-      - xpack.security.transport.ssl.truststore.password=password
-      - ELASTIC_PASSWORD=password
+      - xpack.security.transport.ssl.keystore.password=${ELASTICSEARCH_PASSWORD}
+      - xpack.security.transport.ssl.truststore.password=${ELASTICSEARCH_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTICSEARCH_PASSWORD}
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - ./data:/usr/share/elasticsearch/data
-      - ./certs:/usr/share/elasticsearch/config/certs
+      - ../data:/usr/share/elasticsearch/data
+      - ../certs:/usr/share/elasticsearch/config/certs
     ports:
       - "9200:9200"
 
@@ -39,7 +39,7 @@ services:
       ELASTICSEARCH_REQUESTTIMEOUT: "300000"
       XPACK_SECURITY_ENABLED: "true"
       ELASTICSEARCH_USERNAME: "elastic"
-      ELASTICSEARCH_PASSWORD: "password"
+      ELASTICSEARCH_PASSWORD: "${ELASTICSEARCH_PASSWORD}"
     depends_on:
       - elasticsearch
     ports:

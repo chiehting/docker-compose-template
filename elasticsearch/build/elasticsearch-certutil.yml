@@ -4,7 +4,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
     container_name: elasticsearch-certutil
     environment:
-      ELASTICSEARCH_PASSWORD: "password"
+      ELASTICSEARCH_PASSWORD: "${ELASTICSEARCH_PASSWORD}"
     volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
+      - ../certs:/usr/share/elasticsearch/config/certs
     command: bash /usr/share/elasticsearch/config/certs/generate-ca.sh

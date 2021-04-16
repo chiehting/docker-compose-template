@@ -1,10 +1,14 @@
-# haproxy
+# Elasticsearch
 
-建立 elasticsearch 
+[Elasticsearch] is a distributed, RESTful search and analytics engine capable of addressing a growing number of use cases.
 
 ## Getting Started
 
 elasticsearch + kibana
+
+### Version
+
+* Ansible: python3.7.3-alpine3.9
 
 ### Prerequisites
 
@@ -13,64 +17,42 @@ elasticsearch + kibana
 
 ## Running
 
-### 初始化
-
-建立相關資料夾以及憑證
-
-1. 變更密碼
+變更初始密碼
 
 ```bash
-vim elasticsearch-certutil.yml
-...
-ELASTICSEARCH_PASSWORD: "password"
-...
-
-vim docker-compose.yml
-...
-xpack.security.transport.ssl.keystore.password=password
-xpack.security.transport.ssl.truststore.password=password
-ELASTIC_PASSWORD=password
-ELASTICSEARCH_PASSWORD: "password"
-...
+cat build/.env
+ELASTICSEARCH_PASSWORD=password
 ```
 
-2. 初始化
+初始化, 建立相關資料夾以及憑, 憑證會生成在 "`certs/elastic-stack-ca.p12`" 底下
 
-會在生成憑證 "`certs/elastic-stack-ca.p12`"
-
-```
+```bash
 make init
 ```
-
-### 啟動服務
 
 確認憑證 "`certs/elastic-stack-ca.p12`" 存在後, 即可啟動服務
 
 ```bash
-# down and up
-make du
-
-# view log
-make logs
-
-# down
-make down
+# Containers down and up and logs
+make dul
 ```
 
-Then you can hit `http://localhost` in your browser through default account "`elastic/password`"
+瀏覽器開啟 `http://localhost` 即可以看到 Kibana 畫面, 使用者帳號 "`elastic` 密碼為剛剛設置的密碼 "`password`"
 
-### 管理用戶
+## 管理用戶
 
-```
+建立帳號 justin 的 superuser
+
+```bash
 # create user
 docker exec -it elasticsearch /usr/share/elasticsearch/bin/elasticsearch-users useradd justin -p 123456 -r superuser
+```
 
+移除帳號 justin
+
+```bash
 # delete user
 docker exec -it elasticsearch /usr/share/elasticsearch/bin/elasticsearch-users userdel justin
 ```
 
- 
-
-
-
-
+ [Elasticsearch]: https://www.elastic.co/elasticsearch/

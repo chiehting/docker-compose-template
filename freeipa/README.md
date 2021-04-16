@@ -1,12 +1,14 @@
-# docker-ansible
+# freeipa
 
-建立freeipa服務.
+[Freeipa]  is an integrated security information management solution combining Linux (Fedora), 389 Directory Server, MIT Kerberos, NTP, DNS, Dogtag (Certificate System). It consists of a web interface and command-line administration tools.
 
 ## Getting Started
 
-使用官方 freeipa image 建置 freeipa 服務, 並使用腳本更新憑證.
 
-* [freeipa](https://hub.docker.com/r/freeipa/freeipa-server/)
+
+### version
+
+* freeipa-server: centos-8-4.8.7
 
 ### Prerequisites
 
@@ -15,31 +17,35 @@
 
 ## Running
 
-編輯 dcoker-compose.yml 裡面參數 PASSWORD、hostname、IPA_SERVER_HOSTNAME
 
+變更環境變數
+
+```bash
+cat build/.env
+REALM=CHIEHTING.COM
+FREEIPA_PASSWORD=password
+IPA_SERVER_HOSTNAME=ldap.chiehting.com
+IPA_SERVER_IP=127.0.0.1
+```
 
 啟動服務
 
 ```bash
-docker-compose up -d
+make dul
 ```
+
+## Certificate
 
 建立憑證
 
 ```bash
-docker exec -it freeipa bash
-
-# 取得認證
-printf "$PASSWORD"|kinit admin
-klist
-
-# 更新管理 CA  root certificates
-/script/setup-le.sh
+make cret
 ```
 
 更新憑證
 
 ```bash
-docker exec -it freeipa /script/renew-le.sh
+make rcret
 ```
 
+[Freeipa]: https://www.freeipa.org/

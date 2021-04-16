@@ -1,35 +1,43 @@
-# ansible
+# Ansible
 
-ansible 環境.
+[Ansible] is an IT automation tool. It can configure systems, deploy software, and orchestrate more advanced IT tasks such as continuous deployments or zero downtime rolling updates.
 
 ## Getting Started
 
-使用docker整合ansible環境,可以在local開發roles並且測試部署是否成功.
+使用 Docker 整合 Ansible 環境, 可以在 local 開發 roles 並且測試部署.
 
-* [ansible](https://github.com/ansible/ansible)
+### Version
+
+* Ansible: python3.7.3-alpine3.9
 
 ### Prerequisites
 
-* [docker](https://docs.docker.com/install/)
-* [docker-compose](https://docs.docker.com/compose/install/)
+* [docker]
+* [docker-compose]
 
 ## Running
 
-### 確認Makefile的任務
+Show Makefile list of targets
 
 ```bash
-make
+bash-3.2$ make
+ps     docker-compose ps
+du     docker-compose down and up
+dul    docker-compose down and up and logs
 ```
 
-### Build docker images and start
-
-建置docker images,並且up.
+Build docker images and start
 
 ```bash
-make up
+bash-3.2$ make du
 ```
+
+Run hello_world playbooks
 
 ```bash
 docker exec -it ansible ansible-playbook -i inventories playbooks/hello_world.yml 
 ```
 
+[Ansible]: https://github.com/ansible/ansible
+[docker]: https://docs.docker.com/install/
+[docker-compose]: https://docs.docker.com/compose/install/

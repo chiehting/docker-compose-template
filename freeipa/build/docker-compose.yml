@@ -6,18 +6,18 @@ services:
     container_name: freeipa
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
-    hostname: ldap.chiehting.com
+    hostname: ${IPA_SERVER_HOSTNAME}
     environment:
-      - DEBUG_TRACE=1
-      - DEBUG_NO_EXIT=1
-      - IPA_SERVER_IP=127.0.0.1
-      - PASSWORD=PASSWORD
-      - IPA_SERVER_HOSTNAME=ldap.chiehting.com
+      - DEBUG_TRACE=0
+      - DEBUG_NO_EXIT=0
+      - IPA_SERVER_IP=${IPA_SERVER_IP}
+      - PASSWORD=${FREEIPA_PASSWORD}
+      - IPA_SERVER_HOSTNAME=${IPA_SERVER_HOSTNAME}
     command:
-      - --admin-password=PASSWORD
-      - --ds-password=PASSWORD
+      - --admin-password=${FREEIPA_PASSWORD}
+      - --ds-password=${FREEIPA_PASSWORD}
       - -U
-      - --realm=CHIEHTING.COM
+      - --realm=${REALM}
     ports:
       # FreeIPA WebUI
       - "80:80"
@@ -41,7 +41,7 @@ services:
       - "9444:9444"
       - "9445:9445"
     volumes:
-      - ./freeipa/data:/data
-      - ./freeipa/tmp:/tmp
-      - ./script:/script
+      - ../freeipa/data:/data
+      - ../freeipa/tmp:/tmp
+      - ../script:/script
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

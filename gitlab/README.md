@@ -23,6 +23,19 @@ make
 
 ### Build docker images and start
 
+Change domain.
+
+```bash
+vim docker/docker-compose.yml
+...
+  hostname: 'gitlab.chiehting.com'
+  external_url 'http://gitlab.chiehting.com'
+  registry_external_url 'http://gitlab.chiehting.com:5050'
+  pages_external_url 'http://pages.chiehting.com'
+  gitlab_pages['external_http'] = 'http://pages.chiehting.com'
+```
+
+
 Build the docker image, and start services of gitlab-server、gitlab-runner
 
 ```bash
