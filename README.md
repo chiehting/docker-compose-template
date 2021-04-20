@@ -16,7 +16,7 @@
 * [Jekyll]
 * [OpenVPN]
 * [Redmine]
-
+* [SchemaSpy]
 
 ### Prerequisites
 
@@ -35,3 +35,4 @@
 [Jekyll]: https://jekyllrb.com/
 [OpenVPN]: https://openvpn.net/
 [Redmine]: https://www.redmine.org/
+[SchemaSpy]: http://schemaspy.org/

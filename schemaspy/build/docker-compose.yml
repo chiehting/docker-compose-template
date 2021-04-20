@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  schemaspy:
+    image: schemaspy/schemaspy:6.1.0
+    container_name: schemaspy
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+    volumes:
+      - '../data/output:/output'
+      - '../data/schemaspy.properties:/schemaspy.properties'
+    command: -debug -connprops useSSL\\=false;
+
+networks:
+  default:
+    name: schemaspy
