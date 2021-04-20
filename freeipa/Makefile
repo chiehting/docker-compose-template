@@ -3,12 +3,12 @@ help: ## Format and display the manual pages
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 cret: ## Create Certificate
-	docker exec -it freeipa bash /script/kinit.sh
-	docker exec -it freeipa bash /script/setup-le.sh
+	docker exec -it freeipa bash /scripts/kinit.sh
+	docker exec -it freeipa bash /scripts/setup-le.sh
 
 rcret: ## Renew Certificate
-	docker exec -it freeipa bash /script/kinit.sh
-	docker exec -it freeipa bash /script/renew-le.sh
+	docker exec -it freeipa bash /scripts/kinit.sh
+	docker exec -it freeipa bash /scripts/renew-le.sh
 
 .PHONY: up
 up: ## Create and start containers
@@ -27,7 +27,7 @@ logs: ## View output from containers
 	$(call docker-compose,logs -f --tail 100)
 
 .PHONY: clean
-clean: ## Clean Elasticsearch data
+clean: ## Clean Freeipa data
 	rm -rf freeipa
 
 .PHONY: du

@@ -1,31 +1,39 @@
-DOCKERDIR:=./docker
+DOCKERDIR:=./build
 .DEFAULT_GOAL:=help
 
+.PHONY: help
+help: ## Format and display the manual pages
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST)|sed -E 's/[a-zA-Z_-]+://'|awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 .PHONY: du
-du: ## docker compose down,up.
+du: ## Containers down and up
 	make down && make up
 
 .PHONY: dul
-dul: ## docker compose down,up,logs.
+dul: ## Containers down and up and logs
 	make down && make up && make logs
 
-up: ${DOCKERDIR}/docker-compose.yml
+.PHONY: up
+up: ${DOCKERDIR}/docker-compose.yml ## Create and start containers
 	$(call docker-compose,up -d)
 
-down: ${DOCKERDIR}/docker-compose.yml
+.PHONY: down
+down: ${DOCKERDIR}/docker-compose.yml ## Stop and remove resources
 	$(call docker-compose,down)
 
-ps: ${DOCKERDIR}/docker-compose.yml
+.PHONY: ps
+ps: ${DOCKERDIR}/docker-compose.yml ## List containers
 	$(call docker-compose,ps)
 
-logs: ${DOCKERDIR}/docker-compose.yml
+.PHONY: logs
+logs: ${DOCKERDIR}/docker-compose.yml ## View output from containers
 	$(call docker-compose,logs -f --tail 100)
 
-.PHONY: help
-help: ## show help.
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST)|sed -E 's/[a-zA-Z_-]+://'|awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+.PHONY: clean
+clean: ## Clean Gitlab data
+	rm -rf jekyll-theme-next/_site jekyll-theme-next/.jekyll-metadata
 
 define docker-compose
-    @docker-compose -f ${DOCKERDIR}/docker-compose.yml -p haproxy $1;
+    @docker-compose -f ${DOCKERDIR}/docker-compose.yml -p jeklly $1;
 endef
 

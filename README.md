@@ -1,5 +1,8 @@
 # docker-compose-template
-平時在使用的 docker-compose 範例
+
+平時在使用的 docker-compose 範本.
+
+若有任何問題 可以發 Issue 告知. If you have any questions, please create an Issue.
 
 ## Getting Started
 

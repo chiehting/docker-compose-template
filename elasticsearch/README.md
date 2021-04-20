@@ -4,11 +4,11 @@
 
 ## Getting Started
 
-elasticsearch + kibana
+Elasticsearch + Kibana
 
-### Version
+### Container version
 
-* Ansible: python3.7.3-alpine3.9
+* elasticsearch:7.12.0
 
 ### Prerequisites
 
@@ -17,12 +17,14 @@ elasticsearch + kibana
 
 ## Running
 
-變更初始密碼
+### Modify environment file
 
 ```bash
 cat build/.env
 ELASTICSEARCH_PASSWORD=password
 ```
+
+### Build docker images and start
 
 初始化, 建立相關資料夾以及憑, 憑證會生成在 "`certs/elastic-stack-ca.p12`" 底下
 
@@ -38,6 +40,20 @@ make dul
 ```
 
 瀏覽器開啟 `http://localhost` 即可以看到 Kibana 畫面, 使用者帳號 "`elastic` 密碼為剛剛設置的密碼 "`password`"
+
+### Stop containers
+
+停止服務
+
+```bash
+make down
+```
+
+移除資料
+
+```bash
+make clean
+```
 
 ## 管理用戶
 

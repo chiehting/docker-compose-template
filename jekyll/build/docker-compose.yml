@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  jekyll:
+    build: .
+    image: jekyll:2.6.1-alpine3.9
+    container_name: jekyll
+    restart: always
+    working_dir: /jekyll
+    volumes:
+      - ../build:/build
+      - ../jekyll-theme-next:/jekyll
+    ports:
+      - '80:4000'
+      - '8888:35729'
+    command: /build/run.sh

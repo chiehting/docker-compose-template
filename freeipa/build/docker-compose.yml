@@ -43,5 +43,5 @@ services:
     volumes:
       - ../freeipa/data:/data
       - ../freeipa/tmp:/tmp
-      - ../script:/script
+      - ../scripts:/scripts
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

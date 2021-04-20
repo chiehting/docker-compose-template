@@ -1,5 +1,3 @@
-gitlab-server
-gitlab-runner
-server
-runner
+# gitlab data, gitlab runner data
+d
 backup/*.tar
