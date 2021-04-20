@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  ovpn-init:
+    image: kylemanna/openvpn
+    container_name: ovpn-init
+    environment:
+      DEBUG: 1
+      OVPN_CN: ${DOMAINNAME}
+    volumes:
+      - ../scripts/ovpn_initpki:/usr/local/bin/ovpn_initpki
+      - ../data:/etc/openvpn
+    command: bash -c "ovpn_genconfig -u udp://${DOMAINNAME} && ovpn_initpki nopass"
+
+networks:
+  default:
+    name: openvpn

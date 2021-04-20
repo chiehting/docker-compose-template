@@ -14,6 +14,7 @@
 * [GitLab]
 * [HAProxy]
 * [Jekyll]
+* [OpenVPN]
 * [Redmine]
 
 
@@ -32,4 +33,5 @@
 [GitLab]: https://about.gitlab.com/
 [HAProxy]: http://www.haproxy.org/
 [Jekyll]: https://jekyllrb.com/
+[OpenVPN]: https://openvpn.net/
 [Redmine]: https://www.redmine.org/
