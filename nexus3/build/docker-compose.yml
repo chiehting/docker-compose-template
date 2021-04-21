@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+
+  nexus:
+    image: 'sonatype/nexus3:3.30.0'
+    restart: always
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    ports:
+      - '80:8081'
+      - '5000:5000'
+    volumes:
+      - '../data:/nexus-data'
+
+networks:
+  default:
+    name: nexus
