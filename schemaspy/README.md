@@ -4,8 +4,7 @@
 
 ## Getting Started
 
-* [schemaspy](http://schemaspy.org/)
-* [schemaspy image](https://hub.docker.com/r/schemaspy/schemaspy/)
+Github 專案  [schemaspy/schemaspy](https://github.com/schemaspy/schemaspy)
 
 ### Container version
 

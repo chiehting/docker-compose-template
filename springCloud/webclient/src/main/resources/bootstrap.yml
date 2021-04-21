@@ -1,0 +1,14 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: webclient
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka/eureka/
+
+webservice:
+  name: webservice

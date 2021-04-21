@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+spring:
+  application:
+     name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          # uri: file://opt/src/git-repo
+          uri: https://github.com/ityouknow/spring-cloud-starter
+          search-paths: config-repo
+          username:
+          password:
+      label: master
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka/eureka

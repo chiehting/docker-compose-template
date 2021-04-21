@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  maven:
+    image: maven:3.6.2-jdk-11
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+    volumes:
+      - '../${service}:/opt/src'
+    working_dir: '/opt/src'
+    command: bash -c 'mvn clean && mvn package'
+

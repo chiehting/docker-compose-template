@@ -21,11 +21,7 @@
 * [Redis]
 * [Redmine]
 * [SchemaSpy]
-
-### Prerequisites
-
-* [docker](https://docs.docker.com/install/)
-* [docker-compose](https://docs.docker.com/compose/install/)
+* [Spring Cloud]
 
 ## Running
 
@@ -44,3 +40,4 @@
 [Redis]: https://redis.io/
 [Redmine]: https://www.redmine.org/
 [SchemaSpy]: http://schemaspy.org/
+[Spring Cloud]: https://spring.io/projects/spring-cloud

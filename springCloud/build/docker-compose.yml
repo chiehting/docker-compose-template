@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:
+    eureka:
+        container_name: 'eureka'
+        image: openjdk:8u201-jdk-alpine3.9
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '1024k'
+                max-file: '10'
+        volumes:
+            - '../eureka:/opt/src'
+        working_dir: '/opt/src'
+        ports:
+            - '88:80'
+        command: java -jar target/main.jar --spring.config.location=file:///opt/src/src/main/resources/bootstrap.yml
+
+    config:
+        container_name: 'config'
+        image: openjdk:8u201-jdk-alpine3.9
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '1024k'
+                max-file: '10'
+        volumes:
+            - '../config:/opt/src'
+        working_dir: '/opt/src'
+        ports:
+            - '81:80'
+        command: java -Deureka.client.serviceUrl.defaultZone=http://eureka/eureka -jar target/main.jar --spring.config.location=file:///opt/src/src/main/resources/bootstrap.yml
+
+    gateway:
+        container_name: 'gateway'
+        image: openjdk:8u201-jdk-alpine3.9
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '1024k'
+                max-file: '10'
+        volumes:
+            - '../gateway:/opt/src'
+        working_dir: '/opt/src'
+        ports:
+            - '80:80'
+        command: java -Deureka.client.serviceUrl.defaultZone=http://eureka/eureka/ -jar target/main.jar --spring.config.location=file:///opt/src/src/main/resources/bootstrap.yml
+
+    webservice:
+        container_name: 'webservice'
+        image: openjdk:8u201-jdk-alpine3.9
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '1024k'
+                max-file: '10'
+        volumes:
+            - '../webservice:/opt/src'
+        working_dir: '/opt/src'
+        command: java -jar target/main.jar
+
+    webclient:
+        container_name: 'websclient'
+        image: openjdk:8u201-jdk-alpine3.9
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '1024k'
+                max-file: '10'
+        volumes:
+            - '../webclient:/opt/src'
+        working_dir: '/opt/src'
+        command: java -jar target/main.jar

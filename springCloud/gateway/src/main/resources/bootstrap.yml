@@ -1,0 +1,23 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+      - id: webservice
+        uri: lb://webservice/hello
+        predicates:
+        - Path=/hello
+      - id: webclient
+        uri: lb://webclient
+        predicates:
+        - Path=/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka/eureka/
+
