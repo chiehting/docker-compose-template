@@ -15,6 +15,7 @@
 * [HAProxy]
 * [Jekyll]
 * [OpenVPN]
+* [Redis]
 * [Redmine]
 * [SchemaSpy]
 
@@ -34,5 +35,6 @@
 [HAProxy]: http://www.haproxy.org/
 [Jekyll]: https://jekyllrb.com/
 [OpenVPN]: https://openvpn.net/
+[Redis]: https://redis.io/
 [Redmine]: https://www.redmine.org/
 [SchemaSpy]: http://schemaspy.org/

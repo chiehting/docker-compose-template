@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  redisinsight:
+    image: redislabs/redisinsight:1.10.0
+    container_name: redisinsight
+    volumes:
+      - '../data/redisinsight:/db'
+    ports:
+      - "80:8001"
+
+  redis:
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+      image: redis
+      container_name: redis
+      restart: always
+      environment:
+        mode: ${MODE:-single}
+      volumes:
+        - '../data/redis/conf:/redis-conf'
+        - '../data/redis/data:/redis-data'
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "1024k"
+          max-file: "10"
