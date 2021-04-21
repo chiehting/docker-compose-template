@@ -1,6 +1,6 @@
-# docker-redmine
+# Redmine
 
-Redmine 專案管理系統
+[Redmine] is a flexible project management web application.
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ Redmine 專案管理系統
 cd redmine/plugins
 ```
 
-### Run services
+### Run container
 
 ```bash
 make up
@@ -35,7 +35,7 @@ make up
 |---|---|---|
 |管理者|admin|admin|
 
-### Stop services
+### Stop container
 
 ```bash
 make down
@@ -46,3 +46,6 @@ make down
 ```bash
 make clean
 ```
+
+
+[Redmine]: https://www.redmine.org/

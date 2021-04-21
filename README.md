@@ -14,7 +14,10 @@
 * [GitLab]
 * [HAProxy]
 * [Jekyll]
+* [MySQL]
+* [Nexus]
 * [OpenVPN]
+* [PHP]
 * [Redis]
 * [Redmine]
 * [SchemaSpy]
@@ -34,7 +37,10 @@
 [GitLab]: https://about.gitlab.com/
 [HAProxy]: http://www.haproxy.org/
 [Jekyll]: https://jekyllrb.com/
+[MySQL]: https://www.mysql.com/
+[Nexus]: https://www.sonatype.com/products/repository-pro
 [OpenVPN]: https://openvpn.net/
+[PHP]: https://www.php.net/
 [Redis]: https://redis.io/
 [Redmine]: https://www.redmine.org/
 [SchemaSpy]: http://schemaspy.org/

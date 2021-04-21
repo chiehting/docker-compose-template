@@ -1,6 +1,6 @@
 # SchemaSpy
 
-Document your database simply and easily
+[SchemaSpy] is generating your database to HTML documentation, including Entity Relationship diagrams.
 
 ## Getting Started
 
@@ -40,15 +40,15 @@ schemaspy.o=/output
 schemaspy.s=testdb
 ```
 
-### Start schemaspy
+### Start container
 
-啟動schemaspy,結果會輸出在./data/output中. 完成後可以開啟./output/index.html檢視
+啟動 SchemaSpy, 結果會輸出在./data/output中. 完成後可以開啟./output/index.html檢視
 
 ```bash
 make up
 ```
 
-### Stop schemaspy
+### Stop container
 
 ```bash
 make down
@@ -59,3 +59,6 @@ make down
 ```bash
 make clean
 ```
+
+
+[SchemaSpy]: http://schemaspy.org/

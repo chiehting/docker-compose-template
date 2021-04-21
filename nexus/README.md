@@ -1,6 +1,6 @@
 # nexus3
 
-Manage binaries and build artifacts across your software supply chain.
+[Nexus] is manage binaries and build artifacts across your software supply chain.
 
 ## Getting Started
 
@@ -40,3 +40,5 @@ make down
 ```bash
 make clean
 ```
+
+[Nexus]: https://www.sonatype.com/products/repository-pro

@@ -1,11 +1,12 @@
 # Gitlab
 
-啟動 Gitalb + Gitlab Runner
+[GitLab] is the open DevOps platform, delivered as a single application. 
 
 ## Getting Started
 
-1. 為了避免 `File name too long` 問題, volume 路徑使用 d (data) 當作名稱.
-2. 設定檔配置請參考 [GitLab Pages administration](https://docs.gitlab.com/ce/administration/pages/).
+1. 將啟動 Gitalb + Gitlab Runner
+2. 為了避免 `File name too long` 問題, volume 路徑使用 d (data) 當作名稱.
+3. 設定檔配置請參考 [GitLab Pages administration](https://docs.gitlab.com/ce/administration/pages/).
 
 ### Container version
 
@@ -75,3 +76,6 @@ make register
 解決方法:
 
 可以移除或縮短 `build/docker-compose.yml` 內 `volume`.
+
+
+[GitLab]: https://about.gitlab.com/

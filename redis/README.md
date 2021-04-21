@@ -1,10 +1,11 @@
-# redis
+# Redis
 
-建立 redis, redis cluster 環境.
+[Redis] is an open source (BSD licensed), in-memory data structure store, used as a database, cache, and message broker. 
 
 ## Getting Started
 
-用於開發環境, 並提供 redislabs web gui 介面做資料查詢.
+1. 可以透過配置 `data/.env` 來使用 Redis cluster
+2. 提供 redislabs web gui 查詢 Redis
 
 ### Container version
 
@@ -56,3 +57,6 @@ make down
 ```bash
 make clean
 ```
+
+
+[Redis]: https://redis.io/

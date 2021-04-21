@@ -1,12 +1,10 @@
 # OpenVPN
 
-OpenVPN Server
-
-基於 Github 專案 [docker-openvpn](https://github.com/kylemanna/docker-openvpn)
+[OpenVPN] provides flexible VPN solutions for businesses to secure all data communications and extend private network services while maintaining security.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+基於 Github 專案 [docker-openvpn](https://github.com/kylemanna/docker-openvpn)
 
 ### Prerequisites
 
@@ -55,3 +53,5 @@ make down
 ```bash
 make clean
 ```
+
+[OpenVPN]: https://openvpn.net/

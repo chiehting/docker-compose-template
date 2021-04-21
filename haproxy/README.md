@@ -1,10 +1,8 @@
-# haproxy
+# HAProxy
 
-建立 haproxy 
+[HAProxy] is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications.
 
 ## Getting Started
-
-建立 haproxy 做反向代理
 
 ### Container Version
 
@@ -38,3 +36,5 @@ make up
 ```bash
 make down
 ```
+
+[HAProxy]: http://www.haproxy.org/

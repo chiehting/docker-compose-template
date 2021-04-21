@@ -1,6 +1,6 @@
-# php
+# PHP
 
-PHP is a popular general-purpose scripting language that is especially suited to web development.
+[PHP] is a popular general-purpose scripting language that is especially suited to web development.
 
 ## Getting Started
 
@@ -51,3 +51,6 @@ make down
 ```bash
 make clean
 ```
+
+
+[PHP]: https://www.php.net/

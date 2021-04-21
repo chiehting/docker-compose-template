@@ -1,10 +1,8 @@
-# docker-jekyll
+# Jekyll
 
-使用docker建立jekyll環境
+[Jekyll] is a static site generator. It takes text written in your favorite markup language and uses layouts to create a static website.
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Container version
 
@@ -34,3 +32,5 @@ Then you can hit `http://localhost` in your browser.
 ```bash
 make down
 ```
+
+[Jekyll]: https://jekyllrb.com/
