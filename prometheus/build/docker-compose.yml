@@ -1,0 +1,30 @@
+version: "3"
+services:
+  prometheus:
+    image: quay.io/prometheus/prometheus:v2.26.0
+    container_name: prometheus
+    volumes:
+     - "../data/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+    ports:
+     - "9090:9090"
+    command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:v1.1.2
+    ports:
+     - "9100:9100"
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:7.5.4
+    container_name: grafana
+    volumes:
+    - "../data/grafana:/var/lib/grafana"
+    ports:
+     - "80:3000"
+    environment:
+     - "GF_SECURITY_ADMIN_PASSWORD=admin"

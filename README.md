@@ -22,6 +22,7 @@
 * [Nexus]
 * [OpenVPN]
 * [PHP]
+* [Prometheus]
 * [Redis]
 * [Redmine]
 * [SchemaSpy]
@@ -45,6 +46,7 @@
 [Nexus]: ./nexus/README.md
 [OpenVPN]: ./openvpn/README.md
 [PHP]: ./php/README.md
+[Prometheus]: ./prometheus/README.md
 [Redis]: ./redis/README.md
 [Redmine]: ./redmine/README.md
 [SchemaSpy]: ./schemaspy/README.md
@@ -64,6 +66,7 @@
 [Nexus office]: https://www.sonatype.com/products/repository-pro
 [OpenVPN office]: https://openvpn.net/
 [PHP office]: https://www.php.net/
+[Prometheus]: https://prometheus.io/
 [Redis office]: https://redis.io/
 [Redmine office]: https://www.redmine.org/
 [SchemaSpy office]: http://schemaspy.org/
