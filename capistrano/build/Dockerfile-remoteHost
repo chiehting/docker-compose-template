@@ -1,0 +1,14 @@
+FROM alpine:3.13.5
+LABEL maintainer "Justin Lee - <ting911111@gmail.com>"
+
+RUN apk add --no-cache git openssh-server openssh tzdata \
+  && sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config \
+  && sed -i "s/#PasswordAuthentication.*/PasswordAuthentication no/g" /etc/ssh/sshd_config \
+  && ssh-keygen -t rsa -P "" -f /etc/ssh/ssh_host_rsa_key \
+  && ssh-keygen -t ecdsa -P "" -f /etc/ssh/ssh_host_ecdsa_key \
+  && ssh-keygen -t ed25519 -P "" -f /etc/ssh/ssh_host_ed25519_key \
+  && echo "root:root" | chpasswd
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

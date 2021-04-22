@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  capistrano:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: capistrano:ruby2.5.3-alpine3.8
+    container_name: capistrano
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+    restart: always
+    volumes:
+      - ../data:/opt/capistrano
+      - ../ssh:/root/.ssh
+    environment:
+      - PULSAR_CONF_REPO=/opt/capistrano
+    sysctls:
+      - net.core.somaxconn=65536
+      - net.ipv4.tcp_syncookies=0
+    working_dir: /opt/capistrano
+    tty: true
+    command: sh
+
+  remoteHost:
+    build:
+      context: .
+      dockerfile: Dockerfile-remoteHost
+    image: capistrano:deployHost
+    container_name: remoteHost
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+    restart: always
+    volumes:
+      - ../ssh:/root/.ssh
+    sysctls:
+      - net.core.somaxconn=65536
+      - net.ipv4.tcp_syncookies=0

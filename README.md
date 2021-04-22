@@ -10,6 +10,7 @@
 
 * [Ansible]
 * [AWX]
+* [Capistrano]
 * [Elasticsearch]
 * [FreeIPA]
 * [GitLab]
@@ -32,13 +33,14 @@
 
 [Ansible]: ./ansible/README.md
 [AWX]: ./awx/README.md
+[Capistrano]: ./capistrano/README.md
 [Elasticsearch]: ./elasticsearch/README.md
 [FreeIPA]: ./freeipa/README.md
 [GitLab]: ./gitlab/README.md
 [HAProxy]: ./haproxy/README.md
 [Jekyll]: ./jekyll/README.md
 [Jenkins]: ./jenkins/README.md
-[MariaDB]: ./mysql/README.md
+[MariaDB]: ./mariadb/README.md
 [MySQL]: ./mysql/README.md
 [Nexus]: ./nexus/README.md
 [OpenVPN]: ./openvpn/README.md
@@ -50,6 +52,7 @@
 
 [Ansible office]: https://www.ansible.com/
 [AWX office]: https://github.com/ansible/awx
+[Capistrano]: https://capistranorb.com/
 [Elasticsearch office]: https://www.elastic.co/elasticsearch/
 [FreeIPA office]: https://www.freeipa.org/
 [GitLab office]: https://about.gitlab.com/
