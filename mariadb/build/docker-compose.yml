@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  database:
+    image: mariadb:10.5.9
+    container_name: marisdb
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../data:/var/lib/mysql
+      - ../build:/build
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MARIADB_CLUSTER: "${MARIADB_CLUSTER}"
+    command: "/build/run.sh"

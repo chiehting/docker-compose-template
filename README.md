@@ -16,6 +16,7 @@
 * [HAProxy]
 * [Jekyll]
 * [Jenkins]
+* [MariaDB]
 * [MySQL]
 * [Nexus]
 * [OpenVPN]
@@ -37,6 +38,7 @@
 [HAProxy]: ./haproxy/README.md
 [Jekyll]: ./jekyll/README.md
 [Jenkins]: ./jenkins/README.md
+[MariaDB]: ./mysql/README.md
 [MySQL]: ./mysql/README.md
 [Nexus]: ./nexus/README.md
 [OpenVPN]: ./openvpn/README.md
@@ -54,6 +56,7 @@
 [HAProxy office]: http://www.haproxy.org/
 [Jekyll office]: https://jekyllrb.com/
 [Jenkins office]: https://www.jenkins.io/
+[MariaDB office]: https://mariadb.org/
 [MySQL office]: https://www.mysql.com/
 [Nexus office]: https://www.sonatype.com/products/repository-pro
 [OpenVPN office]: https://openvpn.net/
