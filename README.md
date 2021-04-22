@@ -6,7 +6,7 @@
 
 ## Getting Started
 
-### List
+### List
 
 * [Ansible]
 * [AWX]
@@ -15,6 +15,7 @@
 * [GitLab]
 * [HAProxy]
 * [Jekyll]
+* [Jenkins]
 * [MySQL]
 * [Nexus]
 * [OpenVPN]
@@ -26,20 +27,38 @@
 
 ## Running
 
-請參照各目錄下的 README.md
+請參照各目錄下的 `README.md`
 
-[Ansible]: https://www.ansible.com/
-[AWX]: https://github.com/ansible/awx
-[Elasticsearch]: https://www.elastic.co/elasticsearch/
-[FreeIPA]: https://www.freeipa.org/
-[GitLab]: https://about.gitlab.com/
-[HAProxy]: http://www.haproxy.org/
-[Jekyll]: https://jekyllrb.com/
-[MySQL]: https://www.mysql.com/
-[Nexus]: https://www.sonatype.com/products/repository-pro
-[OpenVPN]: https://openvpn.net/
-[PHP]: https://www.php.net/
-[Redis]: https://redis.io/
-[Redmine]: https://www.redmine.org/
-[SchemaSpy]: http://schemaspy.org/
-[Spring Cloud]: https://spring.io/projects/spring-cloud
+[Ansible]: ./ansible/README.md
+[AWX]: ./awx/README.md
+[Elasticsearch]: ./elasticsearch/README.md
+[FreeIPA]: ./freeipa/README.md
+[GitLab]: ./gitlab/README.md
+[HAProxy]: ./haproxy/README.md
+[Jekyll]: ./jekyll/README.md
+[Jenkins]: ./jenkins/README.md
+[MySQL]: ./mysql/README.md
+[Nexus]: ./nexus/README.md
+[OpenVPN]: ./openvpn/README.md
+[PHP]: ./php/README.md
+[Redis]: ./redis/README.md
+[Redmine]: ./redmine/README.md
+[SchemaSpy]: ./schemaspy/README.md
+[Spring Cloud]: ./springCloud/README.md
+
+[Ansible office]: https://www.ansible.com/
+[AWX office]: https://github.com/ansible/awx
+[Elasticsearch office]: https://www.elastic.co/elasticsearch/
+[FreeIPA office]: https://www.freeipa.org/
+[GitLab office]: https://about.gitlab.com/
+[HAProxy office]: http://www.haproxy.org/
+[Jekyll office]: https://jekyllrb.com/
+[Jenkins office]: https://www.jenkins.io/
+[MySQL office]: https://www.mysql.com/
+[Nexus office]: https://www.sonatype.com/products/repository-pro
+[OpenVPN office]: https://openvpn.net/
+[PHP office]: https://www.php.net/
+[Redis office]: https://redis.io/
+[Redmine office]: https://www.redmine.org/
+[SchemaSpy office]: http://schemaspy.org/
+[Spring Cloud office]: https://spring.io/projects/spring-cloud

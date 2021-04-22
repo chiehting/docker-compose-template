@@ -1,4 +1,4 @@
-# nexus3
+# Nexus
 
 [Nexus] is manage binaries and build artifacts across your software supply chain.
 

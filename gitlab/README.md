@@ -1,4 +1,4 @@
-# Gitlab
+# GitLab
 
 [GitLab] is the open DevOps platform, delivered as a single application. 
 
