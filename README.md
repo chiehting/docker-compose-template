@@ -9,6 +9,7 @@
 ### List
 
 * [Ansible]
+* [AWX]
 * [Elasticsearch]
 * [FreeIPA]
 * [GitLab]
@@ -28,6 +29,7 @@
 請參照各目錄下的 README.md
 
 [Ansible]: https://www.ansible.com/
+[AWX]: https://github.com/ansible/awx
 [Elasticsearch]: https://www.elastic.co/elasticsearch/
 [FreeIPA]: https://www.freeipa.org/
 [GitLab]: https://about.gitlab.com/

@@ -1,0 +1,8 @@
+# awx data
+data/opt
+
+# postgres data
+pgdocker
+
+# socket
+socket
