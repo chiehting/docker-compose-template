@@ -1,6 +1,6 @@
 # docker-compose-template
 
-平時在使用的 docker-compose 範本.
+在本機測試使用的 docker-compose 範本.
 
 若有任何問題 可以發 Issue 告知. If you have any questions, please create an Issue.
 
@@ -14,6 +14,7 @@
 * [Elasticsearch]
 * [FreeIPA]
 * [GitLab]
+* [Grafana]
 * [HAProxy]
 * [Jekyll]
 * [Jenkins]
@@ -38,6 +39,7 @@
 [Elasticsearch]: ./elasticsearch/README.md
 [FreeIPA]: ./freeipa/README.md
 [GitLab]: ./gitlab/README.md
+[Grafana]: ./grafana/README.md
 [HAProxy]: ./haproxy/README.md
 [Jekyll]: ./jekyll/README.md
 [Jenkins]: ./jenkins/README.md
@@ -58,6 +60,7 @@
 [Elasticsearch office]: https://www.elastic.co/elasticsearch/
 [FreeIPA office]: https://www.freeipa.org/
 [GitLab office]: https://about.gitlab.com/
+[Grafana office]: https://grafana.com/
 [HAProxy office]: http://www.haproxy.org/
 [Jekyll office]: https://jekyllrb.com/
 [Jenkins office]: https://www.jenkins.io/
