@@ -59,5 +59,4 @@ make down
 make clean
 ```
 
-
 [SchemaSpy]: http://schemaspy.org/

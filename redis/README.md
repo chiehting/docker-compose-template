@@ -36,7 +36,7 @@ cat build/.env
 make up
 ```
 
-服務啟動後, 瀏覽器開啟 http://localhost 進入 redisinsight, 輸入下面資訊
+服務啟動後, 瀏覽器開啟 [localhost](http://localhost) 進入 redisinsight, 輸入下面資訊
 
 |key|single|cluster|
 |---|---|---|

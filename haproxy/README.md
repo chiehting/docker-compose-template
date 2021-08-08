@@ -23,13 +23,13 @@ make help
 
 ### Build docker images and start
 
-1. 建置docker images,並且啟動 container.
+建置docker images,並且啟動 container.
 
 ```bash
 make up
 ```
 
-2. Then you can hit `http://localhost` in your browser.
+Then you can hit [http://localhost](http://localhost) in your browser.
 
 ### Stop container
 

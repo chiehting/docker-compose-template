@@ -39,7 +39,7 @@ IPA_SERVER_IP=127.0.0.1
 make up
 ```
 
-瀏覽器開啟 `http://localhost` 即可以看到 FreeIPA 畫面.
+瀏覽器開啟 [http://localhost](http://localhost) 即可以看到 FreeIPA 畫面.
 
 ### 停止服務
 

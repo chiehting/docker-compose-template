@@ -29,7 +29,7 @@ cd redmine/plugins
 make up
 ```
 
-啟動完成後,在瀏覽器上開起 http://localhost 可看到 Redmine 畫面, 登入帳密如下
+啟動完成後,在瀏覽器上開起 [localhost](http://localhost) 可看到 Redmine 畫面, 登入帳密如下
 
 |角色|帳號|密碼|
 |---|---|---|
@@ -46,6 +46,5 @@ make down
 ```bash
 make clean
 ```
-
 
 [Redmine]: https://www.redmine.org/

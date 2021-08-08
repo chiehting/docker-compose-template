@@ -36,7 +36,7 @@ location ~ (.php)$ {
 make up
 ```
 
-服務啟動後, 瀏覽器開啟 http://localhost/index.php 會看到 `hello world`
+服務啟動後, 瀏覽器開啟 [localhost](http://localhost/index.php) 會看到 `hello world`
 
 ### Stop container
 
@@ -51,6 +51,5 @@ make down
 ```bash
 make clean
 ```
-
 
 [PHP]: https://www.php.net/

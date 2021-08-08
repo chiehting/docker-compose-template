@@ -25,7 +25,7 @@
 make up
 ```
 
-服務啟動後, 瀏覽器開啟 http://localhost 進入 Nexus, `admin` 帳戶的密碼位置在 `./data/admin.password`
+服務啟動後, 瀏覽器開啟 [http://localhost](http://localhost) 進入 Nexus, `admin` 帳戶的密碼位置在 `./data/admin.password`
 
 ### Stop container
 

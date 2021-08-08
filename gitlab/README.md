@@ -43,7 +43,7 @@ Start services of gitlab-server、gitlab-runner
 make up
 ```
 
-瀏覽器開啟 `http://localhost` 即可以看到 Gitlab 畫面.
+瀏覽器開啟 [http://localhost](http://localhost) 即可以看到 Gitlab 畫面.
 
 ### Stop Gitlab
 
@@ -76,6 +76,5 @@ make register
 解決方法:
 
 可以移除或縮短 `build/docker-compose.yml` 內 `volume`.
-
 
 [GitLab]: https://about.gitlab.com/

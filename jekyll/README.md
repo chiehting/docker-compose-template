@@ -25,7 +25,7 @@ Use [jekyll-theme-next](https://github.com/simpleyyt/jekyll-theme-next) themes.
 make up
 ```
 
-Then you can hit `http://localhost` in your browser.
+Then you can hit [http://localhost](http://localhost) in your browser.
 
 ### Stop container
 

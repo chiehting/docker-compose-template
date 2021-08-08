@@ -40,7 +40,7 @@ Start services of grafana
 make up
 ```
 
-瀏覽器開啟 `http://localhost` 即可以看到 Grafana 畫面.
+瀏覽器開啟 [http://localhost](http://localhost) 即可以看到 Grafana 畫面.
 
 ### Stop Grafana
 

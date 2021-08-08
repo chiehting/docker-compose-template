@@ -50,7 +50,7 @@ server 'remoteHost', user: 'root', roles: %w{web app db}, primary: true
 set :stage, :production # 定義 stage 變數
 ```
 
-### Deploy project to remoteHost container.
+### Deploy project to remoteHost container
 
 從 `capistrano` 部署專案至 `remoteHost`
 
@@ -79,7 +79,6 @@ The Gemfile's dependencies are satisfied
 hello world
 Executed task tests:helloworld for docker-compose-template on production!
 ```
-
 
 ### Stop container
 
