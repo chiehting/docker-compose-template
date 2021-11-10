@@ -54,7 +54,7 @@ RUN set -eux; \
 	wget -O /usr/local/bin/tini "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch"; \
 	wget -O /usr/local/bin/tini.asc "https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini-$dpkgArch.asc"; \
 	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys 6380DC428747F6C393FEACA59A84159D7001A4E5; \
+	gpg --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7; \
 	gpg --batch --verify /usr/local/bin/tini.asc /usr/local/bin/tini; \
 	gpgconf --kill all; \
 	rm -r "$GNUPGHOME" /usr/local/bin/tini.asc; \
@@ -78,12 +78,12 @@ RUN set -eux; \
 	chown redmine:redmine "$HOME"; \
 	chmod 1777 "$HOME"
 
-ENV REDMINE_VERSION 4.2.0
-ENV REDMINE_DOWNLOAD_MD5 51d18b95b358ab1d3ab620c97149279d
-                         
+ENV REDMINE_VERSION 4.2.3
+ENV REDMINE_DOWNLOAD_SHA256 72f633dc954217948558889ca85325fe6410cd18a2d8b39358e5d75932a47a0c
+
 RUN set -eux; \
 	wget -O redmine.tar.gz "https://www.redmine.org/releases/redmine-${REDMINE_VERSION}.tar.gz"; \
-	echo "$REDMINE_DOWNLOAD_MD5 *redmine.tar.gz" | md5sum -c -; \
+	echo "$REDMINE_DOWNLOAD_SHA256 *redmine.tar.gz" | sha256sum -c -; \
 	tar -xf redmine.tar.gz --strip-components=1; \
 	rm redmine.tar.gz files/delete.me log/delete.me; \
 	mkdir -p log public/plugin_assets sqlite tmp/pdf tmp/pids; \

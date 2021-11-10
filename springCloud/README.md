@@ -47,8 +47,7 @@ make up
     * `http://127.0.0.1:81/neo-config/pro/master` 可以看到 config `neo-config-pro.properties`
     * `http://127.0.0.1:81/neo-config/test/master` 可以看到 config `neo-config-test.properties`
     * `http://127.0.0.1:81/neo-config/dev/master` 可以看到 config `neo-config-dev.properties`
-    
-    
+
     這邊使用範例 [config-repo](https://github.com/ityouknow/spring-cloud-examples/tree/master/config-repo), 相關配置在 `./config/src/main/resources/bootstrap.yml`
 
 3. 在瀏覽器上開起連結 
