@@ -21,21 +21,25 @@ then
 fi
 cd "$WORKDIR"
 
-# httpd process prevents letsencrypt from working, stop it
+# Httpd process prevents letsencrypt from working, stop it
 echo "## Httpd process prevents letsencrypt from working, stop it"
 systemctl stop httpd
 
-# get a new cert
+# Get a new cert
 echo "## Get a new cert"
 certbot certonly --standalone -w /var/www/html -d ${IPA_SERVER_HOSTNAME} --register-unsafely-without-email --agree-tos --force-renewal
 
-# replace the cert
+# Start httpd with the new cert
+echo "## Start httpd with the new cert"
+systemctl start httpd
+
+# Replace the cert
 echo "## Replace the cert"
 printf "\n\n"|ipa-server-certinstall -w -d /etc/letsencrypt/live/${IPA_SERVER_HOSTNAME}/privkey.pem /etc/letsencrypt/live/${IPA_SERVER_HOSTNAME}/cert.pem
 restorecon -v /var/lib/ipa/certs/httpd.crt
 
-# start httpd with the new cert
-echo "## Start httpd with the new cert"
-systemctl start httpd
+# Restart ipa services after installing certificate
+ipactl restart
 
 echo "## Finish renew cert."
+

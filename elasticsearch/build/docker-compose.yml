@@ -40,6 +40,9 @@ services:
       XPACK_SECURITY_ENABLED: "true"
       ELASTICSEARCH_USERNAME: "elastic"
       ELASTICSEARCH_PASSWORD: "${ELASTICSEARCH_PASSWORD}"
+#      SERVER_SSL_ENABLED: "true"
+#      SERVER_SSL_CERTIFICATE: "/etc/letsencrypt/live/kibana.example.com/fullchain.pem"
+#      SERVER_SSL_KEY: "/etc/letsencrypt/live/kibana.example.com/privkey.pem"
     depends_on:
       - elasticsearch
     ports:
