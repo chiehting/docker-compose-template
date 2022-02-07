@@ -39,7 +39,7 @@ make init
 make dul
 ```
 
-瀏覽器開啟 [http://localhost](http://localhost) 即可以看到 Kibana 畫面, 使用者帳號 "`elastic` 密碼為剛剛設置的密碼 "`password`"
+瀏覽器開啟 [http://localhost](http://localhost) 即可以看到 Kibana 畫面, 使用者帳號 "`elastic` 密碼為剛剛設置的密碼 "`password`"
 
 ### Stop containers
 

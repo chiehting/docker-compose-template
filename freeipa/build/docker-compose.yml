@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   freeipa:
-    image: freeipa/freeipa-server:centos-8-4.8.7
+    image: freeipa/freeipa-server:centos-8-stream-4.9.8
     container_name: freeipa
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
