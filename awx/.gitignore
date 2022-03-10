@@ -1,5 +1,6 @@
 # awx data
 data/opt
+data/ansible
 
 # postgres data
 pgdocker
