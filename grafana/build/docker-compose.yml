@@ -9,6 +9,7 @@ services:
     volumes:
       - ../data/conf/ldap.toml:/etc/grafana/ldap.toml
       - ../data/grafana:/var/lib/grafana
+#      - /etc/letsencrypt:/etc/grafana/letsencrypt
     environment:
       - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL}
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
