@@ -1,49 +1,80 @@
 version: "3.7"
 
 services:
-  server:
-    image: 'gitlab/gitlab-ce:13.4.1-ce.0'
-    container_name: gitlab
-    hostname: "${EXTERNAL_URL}"
+  #gitlab-ce:
+  #  image: 'gitlab/gitlab-ce:13.4.1-ce.0'
+  #  container_name: gitlab
+  #  hostname: "${EXTERNAL_URL}"
+  #  restart: always
+  #  environment:
+  #    GITLAB_OMNIBUS_CONFIG: |
+  #      external_url "http://${EXTERNAL_URL}"
+  #      registry_external_url "http://${EXTERNAL_URL}:5050"
+  #      unicorn['worker_timeout'] = 60
+  #      unicorn['worker_processes'] = 2
+  #      postgresql['shared_buffers'] = "256MB"
+  #      postgresql['max_worker_processes'] = 8
+  #      gitaly['enable'] = false
+  #      letsencrypt['enable'] = ${LETSENCRYPT_ENABLE}
+  #      nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
+  #      registry_nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
+  #      mattermost_nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
+  #      #pages_external_url "http://${GITLAB_PAGES_URL}"
+  #      #gitlab_pages['external_http'] = "http://${GITLAB_PAGES_URL}"
+  #      #gitlab_pages['inplace_chroot'] = true
+  #      #gitlab_pages['enable'] = false
+  #  ports:
+  #    - '80:80'
+  #    - '443:443'
+  #    - '5050:5050'
+  #  ulimits:
+  #    nofile:
+  #      soft: "65536"
+  #      hard: "65536"
+  #  volumes:
+  #    - '../d/config:/etc/gitlab'
+  #    - '../d/logs:/var/log/gitlab'
+  #    - '../d:/var/opt/gitlab'
+
+  #runner:
+  #  image: 'gitlab/gitlab-runner:alpine-v12.4.0'
+  #  container_name: gitlab-runner
+  #  restart: always
+  #  ulimits:
+  #    nofile:
+  #      soft: "65536"
+  #      hard: "65536"
+  #  volumes:
+  #    - '../d/runner:/etc/gitlab-runner'
+  #    - '/var/run/docker.sock:/var/run/docker.sock'
+
+  gitlab-ee:
+    image: 'gitlab/gitlab-ee:16.3.4-ee.0'
+    hostname: 'gitlab.lindu-lab.com'
+    container_name: gitlab-ee
     restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url "http://${EXTERNAL_URL}"
-        registry_external_url "http://${EXTERNAL_URL}:5050"
-        unicorn['worker_timeout'] = 60
-        unicorn['worker_processes'] = 2
-        postgresql['shared_buffers'] = "256MB"
-        postgresql['max_worker_processes'] = 8
-        gitaly['enable'] = false
-        letsencrypt['enable'] = ${LETSENCRYPT_ENABLE}
-        nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
-        registry_nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
-        mattermost_nginx['redirect_http_to_https'] = ${REDIRECT_HTTP_TO_HTTPS}
-        #pages_external_url "http://${GITLAB_PAGES_URL}"
-        #gitlab_pages['external_http'] = "http://${GITLAB_PAGES_URL}"
-        #gitlab_pages['inplace_chroot'] = true
-        #gitlab_pages['enable'] = false
+        gitlab_rails['gitlab_shell_ssh_port'] = 8022
+        gitlab_rails['time_zone'] = 'UTC'
+        gitlab_rails['gitlab_default_theme'] = 2
+        nginx['client_max_body_size'] = '1024m'
+        gitlab_rails['gitlab_username_changing_enabled'] = false
+        puma['worker_processes'] = 10
     ports:
-      - '80:80'
-      - '443:443'
-      - '5050:5050'
-    ulimits:
-      nofile:
-        soft: "65536"
-        hard: "65536"
+      - '8081:80'
+      - '8022:22'
+    extra_hosts:
+      gitlab.lindu-lab.com: 192.168.2.8
+      zentao.lindu-lab.com: 192.168.2.8
+      reg.lindu-lab.com: 192.168.2.8
     volumes:
-      - '../d/config:/etc/gitlab'
-      - '../d/logs:/var/log/gitlab'
-      - '../d:/var/opt/gitlab'
-
-  runner:
-    image: 'gitlab/gitlab-runner:alpine-v12.4.0'
-    container_name: gitlab-runner
-    restart: always
-    ulimits:
-      nofile:
-        soft: "65536"
-        hard: "65536"
-    volumes:
-      - '../d/runner:/etc/gitlab-runner'
-      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './gitlab-ee/config:/etc/gitlab'
+      - './gitlab-ee/logs:/var/log/gitlab'
+      - './gitlab-ee/data:/var/opt/gitlab'
+    shm_size: '256m'
