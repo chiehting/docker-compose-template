@@ -1,0 +1,17 @@
+services:
+  tdengine:
+    #image: tdengine/tdengine:3.2.1.0
+    #image: tdengine/tdengine:3.0.1.4
+    image: tdengine/tdengine:3.2.0.0
+    container_name: tdengine
+    hostname: tdengine
+    restart: always
+    volumes:
+      - "../data/taos/dnode/data:/var/lib/taos"
+      - "../data/taos/dnode/log:/var/log/taos"
+    ports:
+      - "6030:6030"
+      - "6041:6041"
+      - "6043-6049:6043-6049"
+      - "6043-6049:6043-6049/udp"
+

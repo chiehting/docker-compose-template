@@ -1,2 +1,8 @@
-# Schema Spy data
-output
+# awx data
+data
+
+# postgres data
+pgdocker
+
+# socket
+socket

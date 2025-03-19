@@ -2,7 +2,8 @@ version: "3.7"
 
 services:
   schemaspy:
-    image: schemaspy/schemaspy:6.1.0
+    platform: linux/amd64
+    image: schemaspy/schemaspy:6.2.4
     container_name: schemaspy
     logging:
       driver: 'json-file'
@@ -12,7 +13,7 @@ services:
     volumes:
       - '../data/output:/output'
       - '../data/schemaspy.properties:/schemaspy.properties'
-    command: -debug -connprops useSSL\\=false;
+    command: useSSL\\=false;
 
 networks:
   default:

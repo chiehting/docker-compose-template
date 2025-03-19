@@ -49,8 +49,8 @@ services:
   #    - '/var/run/docker.sock:/var/run/docker.sock'
 
   gitlab-ee:
-    image: 'gitlab/gitlab-ee:16.3.4-ee.0'
-    hostname: 'gitlab.lindu-lab.com'
+    image: 'gitlab/gitlab-ee:17.3.0-ee.0'
+    hostname: 'gitlab.lab.com'
     container_name: gitlab-ee
     restart: always
     logging:
@@ -60,19 +60,33 @@ services:
         max-file: '10'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
+        prometheus_monitoring['enable'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 8022
         gitlab_rails['time_zone'] = 'UTC'
         gitlab_rails['gitlab_default_theme'] = 2
         nginx['client_max_body_size'] = '1024m'
         gitlab_rails['gitlab_username_changing_enabled'] = false
-        puma['worker_processes'] = 10
+        gitlab_rails['smtp_enable'] = false
+        gitlab_rails['gitlab_email_enabled'] = false
+        gitlab_rails['terraform_state_enabled'] = false
+        gitlab_rails['usage_ping_enabled'] = false
+        gitlab_rails['registry_enabled'] = false
+        puma['worker_processes'] = 2
+        sidekiq['max_concurrency'] = 8
+        sidekiq['metrics_enabled'] = false
+        prometheus['enable'] = false
+        alertmanager['enable'] = false
+        node_exporter['enable'] = false
+        redis_exporter['enable'] = false
+        postgres_exporter['enable'] = false
+        gitlab_exporter['enable'] = false
     ports:
       - '8081:80'
       - '8022:22'
     extra_hosts:
-      gitlab.lindu-lab.com: 192.168.2.8
-      zentao.lindu-lab.com: 192.168.2.8
-      reg.lindu-lab.com: 192.168.2.8
+      gitlab.lab.com: 192.168.2.8
+      zentao.lab.com: 192.168.2.8
+      reg.lab.com: 192.168.2.8
     volumes:
       - './gitlab-ee/config:/etc/gitlab'
       - './gitlab-ee/logs:/var/log/gitlab'
