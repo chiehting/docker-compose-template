@@ -1,0 +1,127 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine3.21
+    container_name: ${PROJECT_NAME}_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ../data/postgres/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis:7.2-alpine
+    container_name: ${PROJECT_NAME}_redis
+    command:
+      - redis-server
+      - "--requirepass ${REDIS_PASSWORD}"
+      - "--maxmemory ${REDIS_MAXMEMORY}"
+      - "--maxmemory-policy ${REDIS_MAXMEMORY_POLICY}"
+      - "--save ''"  # 禁用持久化提升性能
+    volumes:
+      - ../data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  nocodb:
+    image: nocodb/nocodb:0.263.4
+    container_name: ${PROJECT_NAME}_nocodb
+    environment:
+      NC_DB: "pg://${DB_HOST}:${DB_PORT}?u=${DB_USER}&p=${DB_PASSWORD}&d=${DB_NAME}"
+      NC_AUTH_JWT_SECRET: ${JWT_SECRET}
+      NC_PUBLIC_URL: ${NC_PUBLIC_URL}
+      NC_REDIS_URL: "redis://:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}/0"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../data/nocodb:/usr/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  n8n:
+    image: n8nio/n8n:1.94.1
+    restart: always
+    container_name: ${PROJECT_NAME}_n8n-main
+    ports:
+      - "0.0.0.0:${N8N_PORT}:${N8N_PORT}"
+    environment:
+      # Deployment environment variables
+      N8N_HOST: ${N8N_HOST}
+      N8N_PORT: "${N8N_PORT}"
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+      # Executions environment variables
+      EXECUTIONS_MODE: ${EXECUTIONS_MODE}
+      # Database environment variables#QUEUE_BULL_REDIS_HOST
+      DB_TYPE: ${DB_TYPE}
+      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
+      DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
+      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
+      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
+      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      DB_POSTGRESDB_POOL_SIZE: ${DB_POSTGRESDB_POOL_SIZE}
+      # Queue mode environment variables
+      QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
+      QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
+      QUEUE_BULL_REDIS_PASSWORD: ${QUEUE_BULL_REDIS_PASSWORD}
+      QUEUE_HEALTH_CHECK_ACTIVE: ${QUEUE_HEALTH_CHECK_ACTIVE}
+      QUEUE_HEALTH_CHECK_PORT: ${QUEUE_HEALTH_CHECK_PORT}
+      QUEUE_WORKER_CONCURRENCY: ${QUEUE_WORKER_CONCURRENCY}
+      N8N_DISABLE_PRODUCTION_MAIN_PROCESS: false
+      # Endpoints environment variables
+      WEBHOOK_URL: "${N8N_PROTOCOL}://${N8N_HOST}:${N8N_PORT}/"
+      # Task runner environment variables
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      # Security environment variables
+      N8N_SECURE_COOKIE: false
+    volumes:
+      - ../data/n8n_data:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Worker节点
+  n8n-worker:
+    image: n8nio/n8n:1.94.1
+    command: worker
+    environment:
+      EXECUTIONS_MODE: ${EXECUTIONS_MODE}
+      DB_TYPE: ${DB_TYPE}
+      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
+      DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
+      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
+      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
+      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      DB_POSTGRESDB_POOL_SIZE: ${WORKER_DB_POSTGRESDB_POOL_SIZE}
+      QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
+      QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
+      QUEUE_BULL_REDIS_PASSWORD: ${QUEUE_BULL_REDIS_PASSWORD}
+      QUEUE_HEALTH_CHECK_ACTIVE: ${QUEUE_HEALTH_CHECK_ACTIVE}
+      QUEUE_HEALTH_CHECK_PORT: ${QUEUE_HEALTH_CHECK_PORT}
+      QUEUE_WORKER_CONCURRENCY: ${WORKER_QUEUE_WORKER_CONCURRENCY}
+      QUEUE_WORKER_STALLED_INTERVAL: ${QUEUE_WORKER_STALLED_INTERVAL}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+    volumes:
+      - ../data/n8n_data:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
