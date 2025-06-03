@@ -53,12 +53,13 @@ services:
     restart: always
     container_name: ${PROJECT_NAME}_n8n-main
     ports:
-      - "0.0.0.0:${N8N_PORT}:${N8N_PORT}"
+      - "${N8N_PORT}:${N8N_PORT}"
     environment:
       # Deployment environment variables
       N8N_HOST: ${N8N_HOST}
       N8N_PORT: "${N8N_PORT}"
       N8N_PROTOCOL: ${N8N_PROTOCOL}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
       # Executions environment variables
       EXECUTIONS_MODE: ${EXECUTIONS_MODE}
       # Database environment variables#QUEUE_BULL_REDIS_HOST
@@ -76,13 +77,17 @@ services:
       QUEUE_HEALTH_CHECK_ACTIVE: ${QUEUE_HEALTH_CHECK_ACTIVE}
       QUEUE_HEALTH_CHECK_PORT: ${QUEUE_HEALTH_CHECK_PORT}
       QUEUE_WORKER_CONCURRENCY: ${QUEUE_WORKER_CONCURRENCY}
-      N8N_DISABLE_PRODUCTION_MAIN_PROCESS: false
       # Endpoints environment variables
       WEBHOOK_URL: "${N8N_PROTOCOL}://${N8N_HOST}:${N8N_PORT}/"
+      N8N_DISABLE_PRODUCTION_MAIN_PROCESS: true
       # Task runner environment variables
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      N8N_RUNNERS_ENABLED: ${N8N_RUNNERS_ENABLED}
+      N8N_RUNNERS_BROKER_PORT: ${N8N_RUNNERS_BROKER_PORT}
       # Security environment variables
       N8N_SECURE_COOKIE: false
+      #
+      OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: true
     volumes:
       - ../data/n8n_data:/home/node/.n8n
     depends_on:
@@ -94,9 +99,15 @@ services:
   # Worker节点
   n8n-worker:
     image: n8nio/n8n:1.94.1
+    restart: always
+    container_name: ${PROJECT_NAME}_n8n-worker
     command: worker
     environment:
+      # Deployment environment variables
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      # Executions environment variables
       EXECUTIONS_MODE: ${EXECUTIONS_MODE}
+      # Database environment variables#QUEUE_BULL_REDIS_HOST
       DB_TYPE: ${DB_TYPE}
       DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
       DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
@@ -104,6 +115,7 @@ services:
       DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
       DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
       DB_POSTGRESDB_POOL_SIZE: ${WORKER_DB_POSTGRESDB_POOL_SIZE}
+      # Queue mode environment variables
       QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
       QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
       QUEUE_BULL_REDIS_PASSWORD: ${QUEUE_BULL_REDIS_PASSWORD}
@@ -111,7 +123,13 @@ services:
       QUEUE_HEALTH_CHECK_PORT: ${QUEUE_HEALTH_CHECK_PORT}
       QUEUE_WORKER_CONCURRENCY: ${WORKER_QUEUE_WORKER_CONCURRENCY}
       QUEUE_WORKER_STALLED_INTERVAL: ${QUEUE_WORKER_STALLED_INTERVAL}
+      # Task runner environment variables
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      N8N_RUNNERS_ENABLED: ${N8N_RUNNERS_ENABLED}
+      N8N_RUNNERS_BROKER_PORT: ${N8N_RUNNERS_BROKER_PORT}
+      #
+      OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: true
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: true
     deploy:
       replicas: 1
       resources:
