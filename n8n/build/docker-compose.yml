@@ -88,8 +88,9 @@ services:
       N8N_SECURE_COOKIE: false
       #
       OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: true
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: true
     volumes:
-      - ../data/n8n_data:/home/node/.n8n
+      - ../data/n8n_data_main:/home/node
     depends_on:
       postgres:
         condition: service_healthy
@@ -137,7 +138,7 @@ services:
           cpus: '1.0'
           memory: 2G
     volumes:
-      - ../data/n8n_data:/home/node/.n8n
+      - ../data/n8n_data_worker:/home/node
     depends_on:
       postgres:
         condition: service_healthy
