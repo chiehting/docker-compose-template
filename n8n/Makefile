@@ -14,6 +14,7 @@ dul: ## Containers down and up and logs
 
 up: ${DOCKERDIR}/docker-compose.yml ## Create and start containers
 	mkdir -p data && chmod 777 data
+	. build/.env
 	$(call docker-compose,up -d)
 
 down: ${DOCKERDIR}/docker-compose.yml ## Stop and remove resources
