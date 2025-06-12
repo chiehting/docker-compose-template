@@ -1,0 +1,24 @@
+services:
+  ncat:
+    image: stephengpope/no-code-architects-toolkit@sha256:0b62e862c87eebe00b1f467a41d5216de26dfd72ce5f31475455c7ee58e42680
+    ports:
+      - "32187:8080"
+    environment:
+      - APP_NAME=NCAToolkit
+      - APP_DEBUG=true
+      - APP_DOMAIN=127.0.0.1
+      - APP_URL=http://${APP_DOMAIN}
+      - SSL_EMAIL=user@example.com
+      - API_KEY=JZd2e7U50YNp
+      - LOCAL_STORAGE_PATH=/tmp
+      - MAX_QUEUE_LENGTH=5
+      - GUNICORN_WORKERS=2
+      - GUNICORN_TIMEOUT=300
+      - S3_ACCESS_KEY=
+      - S3_SECRET_KEY=
+      - S3_ENDPOINT_URL=https://us-east-1.amazonaws.com
+      - S3_REGION=us-east-1
+      - S3_BUCKET_NAME=
+    volumes:
+      - ./data/storage:/var/www/html/storage/app
+      - ./data/logs:/var/www/html/storage/logs
