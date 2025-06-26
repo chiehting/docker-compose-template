@@ -1,17 +1,33 @@
-services:
-  tdengine:
-    #image: tdengine/tdengine:3.2.1.0
-    #image: tdengine/tdengine:3.0.1.4
-    image: tdengine/tdengine:3.2.0.0
-    container_name: tdengine
-    hostname: tdengine
-    restart: always
-    volumes:
-      - "../data/taos/dnode/data:/var/lib/taos"
-      - "../data/taos/dnode/log:/var/log/taos"
-    ports:
-      - "6030:6030"
-      - "6041:6041"
-      - "6043-6049:6043-6049"
-      - "6043-6049:6043-6049/udp"
+x-setimages: &setimages
+  image: tdengine/tdengine:3.3.6.9
+  restart: always
 
+services:
+  td-1:
+    <<: *setimages
+    environment:
+      TAOS_FQDN: "td-1"
+      TAOS_FIRST_EP: "td-1"
+    ports:
+      - 6041:6041
+      - 6030:6030
+    volumes:
+      - ../data/taos/dnode1/data:/var/lib/taos
+      - ../data/taos/dnode1/log:/var/log/taos
+      - ../data/dump:/dump
+  td-2:
+    <<: *setimages
+    environment:
+      TAOS_FQDN: "td-2"
+      TAOS_FIRST_EP: "td-1"
+    volumes:
+      - ../data/taos/dnode2/data:/var/lib/taos
+      - ../data/taos/dnode2/log:/var/log/taos
+  td-3:
+    <<: *setimages
+    environment:
+      TAOS_FQDN: "td-3"
+      TAOS_FIRST_EP: "td-1"
+    volumes:
+      - ../data/taos/dnode3/data:/var/lib/taos
+      - ../data/taos/dnode3/log:/var/log/taos
