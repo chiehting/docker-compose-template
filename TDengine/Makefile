@@ -1,4 +1,4 @@
-DOCKERDIR:=./build
+DOCKERDIR:=.
 .DEFAULT_GOAL:=help
 
 .PHONY: help
