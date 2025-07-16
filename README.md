@@ -2,8 +2,6 @@
 
 在本機測試使用的 docker-compose 範本.
 
-若有任何問題 可以發 Issue 告知. If you have any questions, please create an Issue.
-
 ## Getting Started
 
 ### List
