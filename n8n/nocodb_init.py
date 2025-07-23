@@ -1,3 +1,4 @@
+# kubectl port-forward svc/nocodb 8080:8080
 # python nocodb_init.py
 
 import subprocess
@@ -7,8 +8,8 @@ import requests
 
 NC_ADMIN_EMAIL = "admin@gmail.com"
 NC_ADMIN_PASSWORD = "password"
-NC_URL = 'http://localhost:8080'
-N8N_URL = 'http://n8n:5678'
+NC_URL = "http://localhost:8080"
+N8N_URL = "http://n8n"
 XC_AUTH = ""
 
 def get_header():
@@ -120,13 +121,13 @@ def job(action):
     webhoook_url = f"{N8N_URL}/webhook/1d986c2e-43e9-43b1-a422-dc4d20b6c8c6"
     if action == "insert":
         return {
-            "title": "job_check","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": False,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}}
+            "id": "","title": "job_check","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": False,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}}
         }
     if action == "update":
         return {
-            "title": "job_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "job_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [{"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "job_status"}]
         }
 
@@ -135,8 +136,8 @@ def video_analysis_1(action):
     webhoook_url = f"{N8N_URL}/webhook/56d5338b-2910-4099-9765-6bc433b404a5"
     if action == "insert":
         return {
-            "title": "video_analysis(1)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "video_analysis(1)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "1","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -144,8 +145,8 @@ def video_analysis_1(action):
         }
     if action == "update":
         return {
-            "title": "video_analysis(1)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "video_analysis(1)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "1","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -157,8 +158,8 @@ def video_cutting_2(action):
     webhoook_url = f"{N8N_URL}/webhook/de60bbf1-6d0f-4811-a841-d6fe738c1ef2"
     if action == "insert":
         return {
-            "title": "video_cutting(2)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "video_cutting(2)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "2","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -166,8 +167,8 @@ def video_cutting_2(action):
         }
     if action == "update":
         return {
-            "title": "video_cutting(2)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "video_cutting(2)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "2","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -178,8 +179,8 @@ def handle_head_photo_3(action):
     webhoook_url = f"{N8N_URL}/webhook/6a92922f-068c-4846-bc2e-6b997bf84b2f"
     if action == "insert":
         return {
-            "title": "handle_head_photo(3)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "handle_head_photo(3)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "3","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -187,8 +188,8 @@ def handle_head_photo_3(action):
         }
     if action == "update":
         return {
-            "title": "handle_head_photo(3)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": "http://n8n/webhook/6a92922f-068c-4846-bc2e-6b997bf84b2f"}},
+            "id": "","title": "handle_head_photo(3)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "3","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -199,8 +200,8 @@ def generate_head_video_4(action):
     webhoook_url = f"{N8N_URL}/webhook/a8f23873-071b-4f02-bd5a-cac73604d772"
     if action == "insert":
         return {
-            "title": "generate_head_video(4)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "generate_head_video(4)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "4","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -208,8 +209,8 @@ def generate_head_video_4(action):
         }
     if action == "update":
         return {
-            "title": "generate_head_video(4)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "generate_head_video(4)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "4","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -220,8 +221,8 @@ def handle_tail_video_5(action):
     webhoook_url = f"{N8N_URL}/webhook/9c3d82bf-1212-4dde-9e5e-f16eb6ce2684"
     if action == "insert":
         return {
-            "title": "handle_tail_video(5)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "handle_tail_video(5)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "5","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -229,8 +230,8 @@ def handle_tail_video_5(action):
         }
     if action == "update":
         return {
-            "title": "handle_tail_video(5)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "handle_tail_video(5)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "5","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -241,8 +242,8 @@ def merge_video_6(action):
     webhoook_url = f"{N8N_URL}/webhook/a37ac451-e340-43bb-b1f7-371d391a0212"
     if action == "insert":
         return {
-            "title": "merge_video(6)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "merge_video(6)_create","event": "after","operation":"insert","eventOperation": "after insert","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "6","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
@@ -250,8 +251,8 @@ def merge_video_6(action):
         }
     if action == "update":
         return {
-            "title": "merge_video(6)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,
-            "notification": {"type": "URL","payload": {"method": "POST","path": webhoook_url}},
+            "id": "","title": "merge_video(6)_update","event": "after","operation":"update","eventOperation": "after update","active": True, "condition": True,"version":"v2",
+            "notification": {"type": "URL","payload": {"method": "POST","body":"{{ json event }}","path": webhoook_url}},
             "filters": [
                 {"comparison_op": "eq","value": "6","status": "create","logical_op": "and","fk_column_name": "type"},
                 {"comparison_op": "eq","value": "pending","status": "create","logical_op": "and","fk_column_name": "status"},
