@@ -43,6 +43,9 @@ services:
       NC_PUBLIC_URL: ${NC_PUBLIC_URL}
       NC_REDIS_URL: "redis://:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}/1"
       NC_ALLOW_LOCAL_HOOKS: true
+      TZ: Etc/UTC
+      NC_ADMIN_EMAIL: admin@gmail.com
+      NC_ADMIN_PASSWORD: password
     ports:
       - "8080:8080"
     volumes:
