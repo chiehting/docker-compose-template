@@ -2,7 +2,7 @@ services:
   ncat:
     build:
       context: .
-    image: no-code-architects-toolkit:latest
+    image: cting/no-code-architects-toolkit:146
     ports:
       - "32187:8080"
     environment:
@@ -10,7 +10,6 @@ services:
       - APP_DEBUG=true
       - APP_DOMAIN=127.0.0.1
       - APP_URL=http://${APP_DOMAIN}
-      - SSL_EMAIL=user@example.com
       - API_KEY=JZd2e7U50YNp
       - LOCAL_STORAGE_PATH=/tmp
       - MAX_QUEUE_LENGTH=5
