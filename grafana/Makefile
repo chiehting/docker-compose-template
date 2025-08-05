@@ -35,5 +35,5 @@ dul: ## Containers down and up and logs
 	@make logs
 
 define docker-compose
-    @docker-compose -f build/docker-compose.yml -p grafana $1;
+    @podman compose $1;
 endef
