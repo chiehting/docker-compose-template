@@ -32,9 +32,6 @@ services:
     environment:
       TAOS_FQDN: "tdengine-node1"
       TAOS_FIRST_EP: "tdengine-node1"
-      TAOS_MONITOR: "1"
-      TAOS_SERVER_PORT: "6030"
-      TAOS_DISABLE_KEEPER: "1"
     volumes:
       - ./data/dnode1/data:/var/lib/taos
       - ./data/dnode1/log:/var/log/taos
@@ -59,9 +56,6 @@ services:
     environment:
       TAOS_FQDN: "tdengine-node2"
       TAOS_FIRST_EP: "tdengine-node1"
-      TAOS_MONITOR: "1"
-      TAOS_SERVER_PORT: "6030"
-      TAOS_DISABLE_KEEPER: "1"
     volumes:
       - ./data/dnode2/data:/var/lib/taos
       - ./data/dnode2/log:/var/log/taos
@@ -88,9 +82,6 @@ services:
     environment:
       TAOS_FQDN: "tdengine-node3"
       TAOS_FIRST_EP: "tdengine-node1"
-      TAOS_MONITOR: "1"
-      TAOS_SERVER_PORT: "6030"
-      TAOS_DISABLE_KEEPER: "1"
     volumes:
       - ./data/dnode3/data:/var/lib/taos
       - ./data/dnode3/log:/var/log/taos
