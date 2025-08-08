@@ -1,6 +1,4 @@
-version: '3.7'
 services:
-
   web:
     image: ansible/awx:17.1.0
     container_name: awx_web

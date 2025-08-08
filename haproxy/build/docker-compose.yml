@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   haproxy:
     image: haproxy:alpine3.19
