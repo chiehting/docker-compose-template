@@ -34,6 +34,6 @@ clean: ## Clean Redis data
 	rm -rf pgdocker socket
 
 define docker-compose
-    @docker-compose -f ${DOCKERDIR}/docker-compose.yml -p tdengine $1;
+    @podman compose $1;
 endef
 

@@ -1,33 +1,156 @@
-x-setimages: &setimages
+x-tdengine-common: &tdengine-common
   image: tdengine/tdengine:3.3.6.9
-  restart: always
+  restart: unless-stopped
+  networks:
+    - tdengine-net
+  healthcheck:
+    test: ["CMD", "taos", "-s", "show dnodes;"]
+    interval: 60s
+    timeout: 10s
+    retries: 5
+    start_period: 60s
+  ulimits:
+    nofile:
+      soft: 65536
+      hard: 65536
+  security_opt:
+    - no-new-privileges:true
+
+networks:
+  tdengine-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 services:
-  td-1:
-    <<: *setimages
+  # 主節點 - 負責集群管理
+  tdengine-node1:
+    <<: *tdengine-common
+    container_name: tdengine-node1
+    hostname: tdengine-node1
     environment:
-      TAOS_FQDN: "td-1"
-      TAOS_FIRST_EP: "td-1"
+      TAOS_FQDN: "tdengine-node1"
+      TAOS_FIRST_EP: "tdengine-node1"
+      TAOS_MONITOR: "1"
+      TAOS_SERVER_PORT: "6030"
+      TAOS_DISABLE_KEEPER: "1"
+    volumes:
+      - ./data/dnode1/data:/var/lib/taos
+      - ./data/dnode1/log:/var/log/taos
+      - ./config/taos.cfg:/etc/taos/taos.cfg:ro
+    networks:
+      tdengine-net:
+        ipv4_address: 172.20.0.11
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          # cpus: '2.0'
+        reservations:
+          memory: 1G
+          # cpus: '1.0'
+
+  # 從節點2
+  tdengine-node2:
+    <<: *tdengine-common
+    container_name: tdengine-node2
+    hostname: tdengine-node2
+    environment:
+      TAOS_FQDN: "tdengine-node2"
+      TAOS_FIRST_EP: "tdengine-node1"
+      TAOS_MONITOR: "1"
+      TAOS_SERVER_PORT: "6030"
+      TAOS_DISABLE_KEEPER: "1"
+    volumes:
+      - ./data/dnode2/data:/var/lib/taos
+      - ./data/dnode2/log:/var/log/taos
+      - ./config/taos.cfg:/etc/taos/taos.cfg:ro
+    networks:
+      tdengine-net:
+        ipv4_address: 172.20.0.12
+    depends_on:
+      - tdengine-node1
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          # cpus: '2.0'
+        reservations:
+          memory: 1G
+          # cpus: '1.0'
+
+  # 從節點3
+  tdengine-node3:
+    <<: *tdengine-common
+    container_name: tdengine-node3
+    hostname: tdengine-node3
+    environment:
+      TAOS_FQDN: "tdengine-node3"
+      TAOS_FIRST_EP: "tdengine-node1"
+      TAOS_MONITOR: "1"
+      TAOS_SERVER_PORT: "6030"
+      TAOS_DISABLE_KEEPER: "1"
+    volumes:
+      - ./data/dnode3/data:/var/lib/taos
+      - ./data/dnode3/log:/var/log/taos
+      - ./config/taos.cfg:/etc/taos/taos.cfg:ro
+    networks:
+      tdengine-net:
+        ipv4_address: 172.20.0.13
+    depends_on:
+      - tdengine-node1
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          # cpus: '2.0'
+        reservations:
+          memory: 1G
+          # cpus: '1.0'
+
+  # 備份服務 - 定期備份數據
+  tdengine-backup:
+    image: alpine:3.22.0
+    container_name: tdengine-backup
+    restart: unless-stopped
+    environment:
+      - RETENTION_DAYS=14
+    volumes:
+      - ./data/backup:/backup
+      - ./data/dnode1/data:/source/dnode1:ro
+      - ./data/dnode2/data:/source/dnode2:ro
+      - ./data/dnode3/data:/source/dnode3:ro
+      - ./scripts/backup.sh:/usr/local/bin/backup.sh:ro
+    networks:
+      tdengine-net:
+        ipv4_address: 172.20.0.21
+    command: |
+      sh -c "
+        apk add --no-cache dcron rsync &&
+        echo '0 0 * * * sh /usr/local/bin/backup.sh' | crontab - &&
+        crond -f
+      "
+    depends_on:
+      - tdengine-node1
+      - tdengine-node2
+      - tdengine-node3
+
+  # HAProxy 負載均衡器 (可選)
+  haproxy:
+    image: haproxy:3.1.8-alpine3.22
+    container_name: tdengine-haproxy
+    restart: unless-stopped
     ports:
-      - 6041:6041
-      - 6030:6030
+      # - "6030:6030"  # TDengine 服務
+      - "6041:6041"  # RESTful API
+      - "8404:8404"  # HAProxy 統計頁面
     volumes:
-      - ./data/taos/dnode1/data:/var/lib/taos
-      - ./data/taos/dnode1/log:/var/log/taos
-      - ./data/dump:/dump
-  td-2:
-    <<: *setimages
-    environment:
-      TAOS_FQDN: "td-2"
-      TAOS_FIRST_EP: "td-1"
-    volumes:
-      - ./data/taos/dnode2/data:/var/lib/taos
-      - ./data/taos/dnode2/log:/var/log/taos
-  td-3:
-    <<: *setimages
-    environment:
-      TAOS_FQDN: "td-3"
-      TAOS_FIRST_EP: "td-1"
-    volumes:
-      - ./data/taos/dnode3/data:/var/lib/taos
-      - ./data/taos/dnode3/log:/var/log/taos
+      - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      tdengine-net:
+        ipv4_address: 172.20.0.22
+    depends_on:
+      - tdengine-node1
+      - tdengine-node2
+      - tdengine-node3
