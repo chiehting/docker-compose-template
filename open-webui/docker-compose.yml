@@ -1,0 +1,83 @@
+name: open-webui
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui@sha256:06f4cae7f8873ebcee7952d9993e457c1b083c6bea67b10bc356db7ac71c28e2
+    restart: always
+    container_name: open-webui
+    networks:
+      - openwebui
+    ports:
+      - 32834:8080
+    environment:
+      - OPENAI_API_KEY=
+    volumes:
+      - ./data/open-webui:/app/backend/data
+
+  searxng:
+    container_name: searxng
+    hostname: searxng.com
+    image: docker.io/searxng/searxng:2025.9.3-f91c998
+    restart: unless-stopped
+    ports:
+      - "32833:8080"
+    networks:
+      - openwebui
+    volumes:
+      - ./config/searxng:/etc/searxng:rw
+      - ./data/searxng-data:/var/cache/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:32833/
+      - PYTHONWARNINGS=ignore::DeprecationWarning
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  # traefik:
+  #   image: traefik:v3.5.0
+  #   container_name: openwebui-traefik
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./config/cert:/letsencrypt
+  #     - ./data/logs/traefik:/var/log/traefik
+  #     - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
+  #     - ./config/dynamic.yml:/etc/traefik/dynamic.yml:ro
+  #   networks:
+  #     - openwebui
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "traefik", "healthcheck", "--ping"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
+
+  redis:
+    container_name: openwebui-redis
+    image: docker.io/valkey/valkey:9.0-alpine3.22
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    networks:
+      - openwebui
+    volumes:
+      - ./data/valkey-data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  openwebui:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

@@ -1,0 +1,173 @@
+x-pg-env: &pgenv
+  PGHOST: postgres
+  PGDATABASE: keycloak
+  PGPORT: 5432
+  PGUSER: keycloak
+  PGPASSWORD: password
+  POSTGRES_DB: keycloak
+  POSTGRES_USER: keycloak
+  POSTGRES_PASSWORD: password
+  
+services:
+  postgres:
+    image: postgres:17.6-alpine3.22
+    container_name: keycloak-postgres
+    environment:
+      <<: *pgenv
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - ./data/postgres_data:/var/lib/postgresql/data
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c work_mem=4MB
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+    networks:
+      keycloak-network:
+        ipv4_address: 172.20.0.20
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3
+    container_name: keycloak-app
+    environment:
+      # Database
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KC_DB_POOL_INITIAL_SIZE: 5
+      KC_DB_POOL_MIN_SIZE: 5
+      KC_DB_POOL_MAX_SIZE: 20
+      # Admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: password
+      # Network & Proxy
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_STRICT: true
+      KC_HOSTNAME_STRICT_HTTPS: true
+      KC_PROXY: edge
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_ENABLED: true
+      KC_HTTPS_PORT: 443
+      # Performance & Reliability
+      KC_HTTP_MAX_QUEUED_REQUESTS: 1000
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: false
+      KC_CACHE: ispn
+      KC_CACHE_STACK: jdbc-ping
+      # JVM Options
+      JAVA_OPTS_APPEND: >
+        -Xms1g -Xmx2g
+        -XX:+UseG1GC
+        -XX:MaxGCPauseMillis=100
+        -XX:+UseStringDeduplication
+        -XX:+OptimizeStringConcat
+        -Djava.net.preferIPv4Stack=true
+        -Djboss.modules.system.pkgs=org.jboss.logmanager
+        -Djava.awt.headless=true
+      # Logging
+      KC_LOG_LEVEL: INFO
+      KC_ROOT_LOG_LEVEL: INFO
+    command:
+      - start
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      keycloak-network:
+        ipv4_address: 172.20.0.21
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "cat /proc/1/cmdline"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  traefik:
+    image: traefik:v3.5.0
+    container_name: keycloak-traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - ./config/cert:/letsencrypt
+      - ./data/logs/traefik:/var/log/traefik
+      - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./config/dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks:
+      - keycloak-network
+    restart: unless-stopped
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  backup:
+    image: postgres:17.6-alpine3.22
+    container_name: keycloak-backup
+    environment:
+      <<: *pgenv
+      BACKUP_RETENTION_DAYS: 7
+      BACKUP_ENCRYPTION_KEY:
+    volumes:
+      - ./data/backups:/backups
+      - ./scripts/run_crond.sh:/run_crond.sh:ro
+      - ./scripts/backup.sh:/backup.sh:ro
+      - ./scripts/restore.sh:/restore.sh:ro
+    command: /run_crond.sh
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - keycloak-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  keycloak-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

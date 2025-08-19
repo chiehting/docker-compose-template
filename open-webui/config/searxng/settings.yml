@@ -1,0 +1,32 @@
+# see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
+use_default_settings: true
+server:
+  # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
+  secret_key: "5904bd17c5122ced582e44346273adacc41b9c6d0a5c85a6ea28f6add88e4846"  # change this!
+  limiter: false  # enable this when running the instance for a public usage on the internet
+  image_proxy: true
+valkey:
+  url: redis://redis:6379/0
+
+search:
+  formats:
+    - html
+    - json
+
+# 禁用有問題的搜索引擎
+engines:
+  # 禁用 Pinterest
+  - name: pinterest
+    disabled: true
+  # 禁用 Qwant Images
+  - name: qwant images
+    disabled: true
+
+  - name: google
+    disabled: false
+  - name: bing
+    disabled: false
+  - name: duckduckgo
+    disabled: false
+  - name: startpage
+    disabled: false

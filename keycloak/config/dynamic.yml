@@ -1,0 +1,71 @@
+http:
+  routers:
+    keycloak:
+      rule: "Host(`localhost`)"
+      entryPoints:
+        - "web"
+        - "websecure"
+      service: "keycloak-service"
+      middlewares:
+        - "my-fail2ban"
+        - "security-headers"
+        - "keycloak-ratelimit"
+        - "content-compress"
+      tls: {}
+        # certResolver: "keycloakresolver"
+  services:
+    keycloak-service:
+      loadBalancer:
+        servers:
+          - url: "http://172.20.0.21:8080"
+        healthCheck:
+          port: 9000
+          mode: http
+          method: GET
+          path: /health/ready
+          interval: 30s
+          timeout: 10s
+          scheme: http
+  middlewares:
+    security-headers:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: "https"
+          X-Forwarded-Port: "443"
+        customResponseHeaders:
+          X-Content-Type-Options: "nosniff"
+          X-XSS-Protection: "1; mode=block"
+          Referrer-Policy: "strict-origin-when-cross-origin"
+          Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+          Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none';"
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        forceSTSHeader: true
+    keycloak-ratelimit:
+      rateLimit:
+        burst: 100
+        average: 50
+        period: "1m"
+    content-compress:
+      compress: {}
+    my-fail2ban:
+      plugin:
+        fail2ban:
+          allowlist:
+            ip: []
+          denylist:
+            ip: []
+          rules:
+            enabled: true
+            bantime: "24h"
+            findtime: "1m"
+            maxretry: 10
+            statuscode: "400,401,403-499"
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /letsencrypt/localhost.pem
+        keyFile: /letsencrypt/localhost-key.pem
