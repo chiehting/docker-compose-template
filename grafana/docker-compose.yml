@@ -6,10 +6,11 @@ services:
       - "3000:3000"
     restart: always
     volumes:
-      - ./data/conf/ldap.toml:/etc/grafana/ldap.toml
-#      - /etc/letsencrypt:/etc/grafana/letsencrypt
+      - ./data/conf_bk:/conf_bk
+      - ./data/conf/grafana.ini:/etc/grafana/grafana.ini
+      # - /etc/letsencrypt:/etc/grafana/letsencrypt
     environment:
-      - GF_SERVER_ROOT_URL=http://grafana.example
+      - GF_SERVER_ROOT_URL=http://localhost:3000/
       - GF_SECURITY_ADMIN_USER=admin
       - GF_AUTH_DISABLE_LOGIN_FORM=false
       - GF_SECURITY_ADMIN_PASSWORD=password
