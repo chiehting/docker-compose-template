@@ -15,13 +15,26 @@ search:
 
 # 禁用有問題的搜索引擎
 engines:
-  # 禁用 Pinterest
+  # 禁用
   - name: pinterest
     disabled: true
-  # 禁用 Qwant Images
   - name: qwant images
     disabled: true
+  - name: mymemory translated
+    disabled: true
+  - name: lingva
+    disabled: true
+  - name: dictzone
+    disabled: true
+  - name: duckduckgo weather
+    disabled: true
+  - name: chefkoch
+    disabled: true
+  - name: podcastindex
+    disabled: true
+    
 
+  # 啟用
   - name: google
     disabled: false
   - name: bing
@@ -29,4 +42,6 @@ engines:
   - name: duckduckgo
     disabled: false
   - name: startpage
+    disabled: false
+  - name: stackoverflow
     disabled: false
