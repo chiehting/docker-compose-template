@@ -34,6 +34,6 @@ clean: ## Clean Redis data
 	rm -rf pgdocker socket
 
 define docker-compose
-    @podman compose $1;
+    @docker compose $1;
 endef
 
