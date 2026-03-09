@@ -1,0 +1,43 @@
+services:
+  qdrant:
+    image: docker.io/qdrant/qdrant:v1.17.0
+    container_name: qdrant
+    restart: always
+    ports:
+      - "6333:6333" # REST API
+      - "6334:6334" # gRPC
+    volumes:
+      - './storage:/qdrant/storage'
+    environment:
+      # --- 安全性 ---
+      - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY}                     # 必填，請設定於 .env
+      - QDRANT__SERVICE__READ_ONLY_API_KEY=${QDRANT_READ_ONLY_API_KEY} # 選填，給唯讀服務用
+      # --- 效能調校（針對 <1M 向量 / 1536 維 / 10–100 QPS）---
+      - QDRANT__STORAGE__ON_DISK_PAYLOAD=true    # payload 存磁碟，向量保留在 RAM
+      - QDRANT__STORAGE__MEMMAP_THRESHOLD_KB=512 # 小 segment 留 RAM，大的用 mmap
+      - QDRANT__SERVICE__MAX_REQUEST_SIZE_MB=32
+      - QDRANT__SERVICE__GRPC_PORT=6334
+      # --- HNSW 預設參數（建立 collection 時若未指定會套用）---
+      - QDRANT__COLLECTION__DEFAULT_HNSW_EF_CONSTRUCT=200 # 建索引品質，越高越準但越慢
+      - QDRANT__COLLECTION__DEFAULT_HNSW_M=16             # 適合 1536 維的平衡值
+    deploy:
+      resources:
+        limits:
+          memory: 8G # 留 4G 給 OS/其他程序
+        reservations:
+          memory: 2G
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:6333/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s # 給 Qdrant 足夠時間載入 segment
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"

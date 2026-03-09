@@ -1,0 +1,20 @@
+services:
+  nats:
+    image: nats:2.10.7-alpine
+    container_name: nats-headless
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command:
+      - "-js"
+      - "--server_name" 
+      - "nats-node-1"
+      - "--http_port"
+      - "8222"
+
+  nats-box:
+    image: natsio/nats-box:0.14.1
+    container_name: nats-box
+    restart: unless-stopped
+    tty: true
+    command: sh
