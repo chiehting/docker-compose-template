@@ -1,0 +1,19 @@
+[Unit]
+Description=Podman Play Kube (node_exporter)
+After=network-online.target
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/qdrant/node_exporter
+
+ExecStartPre=-/usr/bin/podman pod rm -f -i node-exporter
+ExecStart=/usr/bin/podman play kube --start=true node_exporter.yaml
+
+ExecStop=/usr/bin/podman pod stop node-exporter
+ExecStopPost=-/usr/bin/podman pod rm -f -i node-exporter
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
