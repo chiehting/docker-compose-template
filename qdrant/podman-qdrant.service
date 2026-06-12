@@ -4,17 +4,11 @@ After=network-online.target
 
 [Service]
 Type=forking
-# 設定工作目錄
 WorkingDirectory=/opt/qdrant/qdrant_v1.17.0
 
-# 啟動前先清理同名的 Pod (避免名稱衝突)
 ExecStartPre=-/usr/bin/podman pod rm -f -i qdrant-stack
-
-# 核心指令：使用 play kube 啟動
-# 加上 --service-container=false 是為了讓 podman 進程不要立即退出，這樣 systemd 才能監控它
 ExecStart=/usr/bin/podman play kube --start=true qdrant.yaml
 
-# 停止時清理
 ExecStop=/usr/bin/podman pod stop qdrant-stack
 ExecStopPost=-/usr/bin/podman pod rm -f -i qdrant-stack
 

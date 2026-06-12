@@ -35,12 +35,30 @@ spec:
       value: "200"
     - name: QDRANT__COLLECTION__DEFAULT_HNSW_M
       value: "16"
+    livenessProbe:
+      exec:
+        command:
+        - /bin/bash
+        - -c
+        - "true < /dev/tcp/127.0.0.1/6333"
+      initialDelaySeconds: 5
+      periodSeconds: 20
+      timeoutSeconds: 5
+      failureThreshold: 3
+    readinessProbe:
+      exec:
+        command:
+        - /bin/bash
+        - -c
+        - "true < /dev/tcp/127.0.0.1/6333"
+      initialDelaySeconds: 5
+      periodSeconds: 10
     volumeMounts:
     - mountPath: /qdrant/storage
       name: qdrant-data
     securityContext:
       capabilities:
-        add: ["SYS_RESOURCE"] # 有助於 Ulimit 生效
+        add: ["SYS_RESOURCE"]  # 使 Ulimit 生效
   volumes:
   - name: qdrant-data
     hostPath:
